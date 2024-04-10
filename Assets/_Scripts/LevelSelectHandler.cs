@@ -8,8 +8,6 @@ public class LevelSelectHandler : MonoBehaviour
     [SerializeField] GameObject sandDescription;
     [SerializeField] GameObject coralDescription;
 
-    [SerializeField] GameObject trashPickupGameHud;
-
     public void ShoreCleaningTapped()
     {
         Debug.Log("Description of Shore Cleaning");
@@ -36,25 +34,22 @@ public class LevelSelectHandler : MonoBehaviour
 
     public void ShoreStart()
     {
-        MainMenuHandler.Instance.FlipState(trashPickupGameHud);
-        TrashPickingHandler.Instance.ShoreLevel();
-        gameObject.SetActive(false);
+        GameSceneManager.Instance.GoToScene("_TrashPickingGamemode");
+        PlayerPrefs.SetString("SelectedLevel", "shoreLevel");
         Debug.Log("Shore Cleaning Start!");
     }
 
     public void SandStart()
     {
-        MainMenuHandler.Instance.FlipState(trashPickupGameHud);
-        TrashPickingHandler.Instance.SandLevel();
-        gameObject.SetActive(false);
+        GameSceneManager.Instance.GoToScene("_TrashPickingGamemode");
+        PlayerPrefs.SetString("SelectedLevel", "sandLevel");
         Debug.Log("Sand Cleaning Start!");
     }
 
     public void CoralStart()
     {
-        MainMenuHandler.Instance.FlipState(trashPickupGameHud);
-        TrashPickingHandler.Instance.CoralLevel();
-        gameObject.SetActive(false);
+        GameSceneManager.Instance.GoToScene("_TrashPickingGamemode");
+        PlayerPrefs.SetString("SelectedLevel", "coralLevel");
         Debug.Log("Coral Cleaning Start!");
     }
 }

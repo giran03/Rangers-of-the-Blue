@@ -1,18 +1,9 @@
+using System;
 using UnityEngine;
 using UnityEngine.XR.ARFoundation;
 
 public class TrashPickingHandler : MonoBehaviour
 {
-    public static TrashPickingHandler Instance;
-
-    private void Awake()
-    {
-        if (Instance != null && Instance != this)
-            Destroy(this);
-        else
-            Instance = this;
-    }
-
     [SerializeField] GameObject netPrefab;
     [SerializeField] Vector3 prefabOffset;
 
@@ -23,44 +14,40 @@ public class TrashPickingHandler : MonoBehaviour
 
     GameObject netObj;
     GameObject levelPrefab;
-    GameObject currentLevel;
-    bool levelSpawned;
+    String selectedLevel;
 
-    public ARTrackedImage currentImage;
     public ARTrackedImageManager aRTrackedImageManager;
-    public bool clearLevel;
 
     private void OnEnable()
     {
         aRTrackedImageManager = GetComponent<ARTrackedImageManager>();
-
         aRTrackedImageManager.trackedImagesChanged += OnImageChange;
+
+        // default level
+        levelPrefab = shoreLevel;
     }
 
-    public void ShoreLevel() => levelPrefab = shoreLevel;
-    public void SandLevel() => levelPrefab = sandLevel;
-    public void CoralLevel() => levelPrefab = coralLevel;
+    private void Update() => LevelSelection();
+
+    void ShoreLevel() => levelPrefab = shoreLevel;
+    void SandLevel() => levelPrefab = sandLevel;
+    void CoralLevel() => levelPrefab = coralLevel;
+
+    void LevelSelection()
+    {
+        selectedLevel = PlayerPrefs.GetString("SelectedLevel");
+        if (selectedLevel == "shoreLevel")
+            ShoreLevel();
+        else if (selectedLevel == "sandLevel")
+            SandLevel();
+        else if (selectedLevel == "coralLevel")
+            CoralLevel();
+    }
 
     void OnImageChange(ARTrackedImagesChangedEventArgs obj)
     {
         foreach (ARTrackedImage image in obj.added)
-        {
-            currentImage = image;
-        }
-        foreach (ARTrackedImage image in obj.updated)
-        {
-            if (currentImage == image)
-            {
-                SpawnLevel();
-                levelSpawned = true;
-                Debug.Log("currentImage is " + currentImage);
-            }
-        }
-    }
-
-    private void Update()
-    {
-        DestroyCurrentLevel();
+            SpawnLevel(image);
     }
 
     void SpawnNet(Transform image)
@@ -68,29 +55,12 @@ public class TrashPickingHandler : MonoBehaviour
         netObj = Instantiate(netPrefab, image.transform);
         netObj.transform.position += prefabOffset;
     }
-    void DestroyCurrentLevel()
-    {
-        if (clearLevel)
-        {
-            DestroyNet();
-            DestroyLevel();
-            levelSpawned = false;
-            clearLevel = false;
-        }
-    }
 
-    public void SpawnLevel()
+    public void SpawnLevel(ARTrackedImage image)
     {
-        if (levelSpawned) return;
-
-        SpawnNet(currentImage.transform);
-        GameObject levelHolder = Instantiate(levelPrefab, currentImage.transform);
-        currentLevel = levelHolder;
-        levelSpawned = true;
+        SpawnNet(image.transform);
+        Instantiate(levelPrefab, image.transform);
 
         Debug.Log("Level Spawned!");
     }
-    public void DestroyNet() => Destroy(netObj);
-
-    public void DestroyLevel() => Destroy(currentLevel);
 }
