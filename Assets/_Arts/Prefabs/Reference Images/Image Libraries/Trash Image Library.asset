@@ -24,6 +24,6 @@ MonoBehaviour:
       m_GuidLow: 11899638997072289106
       m_GuidHigh: 11918210762965291289
     m_Size: {x: 0.1, y: 0.1}
-    m_SpecifySize: 0
+    m_SpecifySize: 1
     m_Name: 01-Trash
     m_Texture: {fileID: 2800000, guid: efe11d52029ea5241991c8248bfd65a5, type: 3}

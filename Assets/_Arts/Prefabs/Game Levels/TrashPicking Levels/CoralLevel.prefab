@@ -48,7 +48,7 @@ MonoBehaviour:
   priority: 0
   blendDistance: 0
   weight: 1
-  sharedProfile: {fileID: 11400000, guid: 1312a55fbdd960e4fa0ac58ed5b958d2, type: 2}
+  sharedProfile: {fileID: 11400000, guid: f73acb0a4b644be4faf0fbacd7beae1b, type: 2}
 --- !u!1 &1313705711345002266
 GameObject:
   m_ObjectHideFlags: 0
@@ -59,7 +59,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2653978191209756493}
   m_Layer: 0
-  m_Name: Sand Level
+  m_Name: CoralLevel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -116,9 +116,9 @@ Transform:
   - {fileID: 2380797403866353919}
   - {fileID: 4629216219097444261}
   - {fileID: 8194091967406937422}
+  - {fileID: 5162974590902989917}
   - {fileID: 1591521641014212755}
   - {fileID: 1883791922698608462}
-  - {fileID: 5162974590902989917}
   m_Father: {fileID: 2653978191209756493}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2190523025071967598
@@ -448,7 +448,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2380797403866353919}
-  - component: {fileID: 1570848999538318845}
+  - component: {fileID: 6751169789259705625}
   m_Layer: 0
   m_Name: Trash Objects
   m_TagString: Untagged
@@ -482,7 +482,7 @@ Transform:
   - {fileID: 1533337921023812664}
   m_Father: {fileID: 548330918546209345}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &1570848999538318845
+--- !u!95 &6751169789259705625
 Animator:
   serializedVersion: 5
   m_ObjectHideFlags: 0
@@ -492,10 +492,10 @@ Animator:
   m_GameObject: {fileID: 4079160446645859923}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 7953474bd3f851f47885e3c4f7886497, type: 2}
+  m_Controller: {fileID: 9100000, guid: feaca6eec4c60fb4484fc346300c721f, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -599,7 +599,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: -0.1, z: 0}
-  m_LocalScale: {x: 0.07, y: 0.07, z: 0.07}
+  m_LocalScale: {x: 0.08, y: 0.08, z: 0.08}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 548330918546209345}
@@ -1441,7 +1441,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 6
+      scalar: 110
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -6219,12 +6219,12 @@ PrefabInstance:
     - target: {fileID: 6593221002913165219, guid: fcaada2960abcca45989b04ce3007ee0,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 0.178
       objectReference: {fileID: 0}
     - target: {fileID: 6593221002913165219, guid: fcaada2960abcca45989b04ce3007ee0,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0.172
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

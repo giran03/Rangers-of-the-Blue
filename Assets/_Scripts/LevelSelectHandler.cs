@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class LevelSelectHandler : MonoBehaviour
@@ -34,22 +32,19 @@ public class LevelSelectHandler : MonoBehaviour
 
     public void ShoreStart()
     {
-        GameSceneManager.Instance.GoToScene("_TrashPickingGamemode");
-        PlayerPrefs.SetString("SelectedLevel", "shoreLevel");
+        // PlayerPrefs.SetString("SelectedLevel", "shoreLevel");
         Debug.Log("Shore Cleaning Start!");
     }
 
     public void SandStart()
     {
-        GameSceneManager.Instance.GoToScene("_TrashPickingGamemode");
-        PlayerPrefs.SetString("SelectedLevel", "sandLevel");
+        // PlayerPrefs.SetString("SelectedLevel", "sandLevel");
         Debug.Log("Sand Cleaning Start!");
     }
 
     public void CoralStart()
     {
-        GameSceneManager.Instance.GoToScene("_TrashPickingGamemode");
-        PlayerPrefs.SetString("SelectedLevel", "coralLevel");
+        // PlayerPrefs.SetString("SelectedLevel", "coralLevel");
         Debug.Log("Coral Cleaning Start!");
     }
 }

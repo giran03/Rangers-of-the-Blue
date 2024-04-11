@@ -9,8 +9,14 @@ EditorBuildSettings:
     path: Assets/_Scenes/_Menu.unity
     guid: cd1a7ea4a0443314b8ea4b1252eeb645
   - enabled: 1
-    path: Assets/_Scenes/_TrashPickingGamemode.unity
+    path: Assets/_Scenes/TrashPicking Gamemodes/_TP-Shore.unity
+    guid: f2f8519d26ba5944e8127e759c872ddd
+  - enabled: 1
+    path: Assets/_Scenes/TrashPicking Gamemodes/_TP-Sand.unity
     guid: 390b361c00f4685419dc31b439053d55
+  - enabled: 1
+    path: Assets/_Scenes/TrashPicking Gamemodes/_TP-Coral.unity
+    guid: dbf581eb5087cd84d811ae00961cc63f
   m_configObjects:
     UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: 6ee72d15cf39dd748a13eac57397b9af,
       type: 2}

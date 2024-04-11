@@ -36,11 +36,6 @@ public class GameSceneManager : MonoBehaviour
         // session.Reset();
     }
 
-    public void PlayTrashPickingGamemode()
-    {
-        GoToScene("_TrashPickingGamemode");
-    }
-
     public void Quit()
     {
         Application.Quit();

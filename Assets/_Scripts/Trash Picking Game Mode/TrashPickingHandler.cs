@@ -1,4 +1,4 @@
-using System;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.XR.ARFoundation;
 
@@ -7,60 +7,55 @@ public class TrashPickingHandler : MonoBehaviour
     [SerializeField] GameObject netPrefab;
     [SerializeField] Vector3 prefabOffset;
 
-    [Header("Levels")]
-    [SerializeField] GameObject shoreLevel;
-    [SerializeField] GameObject sandLevel;
-    [SerializeField] GameObject coralLevel;
-
     GameObject netObj;
-    GameObject levelPrefab;
-    String selectedLevel;
+    ARTrackedImageManager aRTrackedImageManager;
+    ARTrackedImage currentImage;
+    bool hasSpawned;
 
-    public ARTrackedImageManager aRTrackedImageManager;
+    void Awake()
+    {
+        aRTrackedImageManager = GetComponent<ARTrackedImageManager>();
+    }
 
     private void OnEnable()
     {
-        aRTrackedImageManager = GetComponent<ARTrackedImageManager>();
         aRTrackedImageManager.trackedImagesChanged += OnImageChange;
-
-        // default level
-        levelPrefab = shoreLevel;
     }
 
-    private void Update() => LevelSelection();
-
-    void ShoreLevel() => levelPrefab = shoreLevel;
-    void SandLevel() => levelPrefab = sandLevel;
-    void CoralLevel() => levelPrefab = coralLevel;
-
-    void LevelSelection()
+    void OnDisable()
     {
-        selectedLevel = PlayerPrefs.GetString("SelectedLevel");
-        if (selectedLevel == "shoreLevel")
-            ShoreLevel();
-        else if (selectedLevel == "sandLevel")
-            SandLevel();
-        else if (selectedLevel == "coralLevel")
-            CoralLevel();
+        aRTrackedImageManager.trackedImagesChanged -= OnImageChange;
+        hasSpawned = false;
+    }
+
+    private void FixedUpdate()
+    {
+        if (currentImage != null && !hasSpawned)
+        {
+            netObj = Instantiate(netPrefab, currentImage.transform);
+            netObj.transform.position += prefabOffset;
+            hasSpawned =true;
+        }
+        Debug.Log("hasSpawned: " + hasSpawned);
     }
 
     void OnImageChange(ARTrackedImagesChangedEventArgs obj)
     {
         foreach (ARTrackedImage image in obj.added)
-            SpawnLevel(image);
-    }
+        {
+            currentImage = image;
+            Debug.Log("Level Spawned!");
+        }
 
-    void SpawnNet(Transform image)
-    {
-        netObj = Instantiate(netPrefab, image.transform);
-        netObj.transform.position += prefabOffset;
-    }
+        foreach (ARTrackedImage image in obj.updated)
+        {
+            aRTrackedImageManager.trackedImagePrefab.transform.rotation = Quaternion.identity;
+        }
 
-    public void SpawnLevel(ARTrackedImage image)
-    {
-        SpawnNet(image.transform);
-        Instantiate(levelPrefab, image.transform);
-
-        Debug.Log("Level Spawned!");
+        foreach (ARTrackedImage image in obj.removed)
+        {
+            currentImage = null;
+            hasSpawned = false;
+        }
     }
 }

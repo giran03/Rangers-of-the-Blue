@@ -11,6 +11,13 @@ public class MainMenuHandler : MonoBehaviour
             Destroy(this);
         else
             Instance = this;
+
+        string resetSelection = PlayerPrefs.GetString("SelectedLevel");
+        if (resetSelection != null)
+        {
+                PlayerPrefs.SetString("SelectedLevel", "");
+                PlayerPrefs.Save();
+        }
     }
 
     [SerializeField] GameObject mainMenuDisplay;

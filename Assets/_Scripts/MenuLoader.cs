@@ -13,6 +13,7 @@ public class MenuLoader : MonoBehaviour
 
     const string k_DefaultMenuScene = "_Menu";
     const string k_MetaMenuScene = "MetaMenu";
+    const string k_HololensMenuScene = "HololensMenu";
 
     void Awake()
     {
@@ -45,6 +46,12 @@ public class MenuLoader : MonoBehaviour
                 // Default case includes other third-party providers
                 return k_DefaultMenuScene;
         }
+    }
+
+    public static bool IsHmdDevice()
+    {
+        var sceneName = GetMenuSceneName();
+        return (sceneName == k_MetaMenuScene) || (sceneName == k_HololensMenuScene);
     }
 
     public static void LoadMenuScene()
