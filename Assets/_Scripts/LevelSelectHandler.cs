@@ -12,6 +12,8 @@ public class LevelSelectHandler : MonoBehaviour
         MainMenuHandler.Instance.FlipState(shoreDescription);
         sandDescription.SetActive(false);
         coralDescription.SetActive(false);
+
+        PlayerPrefs.SetInt("SelectedLevel", 0);
     }
 
     public void SandCleaningTapped()
@@ -20,6 +22,8 @@ public class LevelSelectHandler : MonoBehaviour
         MainMenuHandler.Instance.FlipState(sandDescription);
         shoreDescription.SetActive(false);
         coralDescription.SetActive(false);
+
+        PlayerPrefs.SetInt("SelectedLevel", 1);
     }
 
     public void CoralCleaningTapped()
@@ -28,23 +32,7 @@ public class LevelSelectHandler : MonoBehaviour
         MainMenuHandler.Instance.FlipState(coralDescription);
         shoreDescription.SetActive(false);
         sandDescription.SetActive(false);
-    }
 
-    public void ShoreStart()
-    {
-        // PlayerPrefs.SetString("SelectedLevel", "shoreLevel");
-        Debug.Log("Shore Cleaning Start!");
-    }
-
-    public void SandStart()
-    {
-        // PlayerPrefs.SetString("SelectedLevel", "sandLevel");
-        Debug.Log("Sand Cleaning Start!");
-    }
-
-    public void CoralStart()
-    {
-        // PlayerPrefs.SetString("SelectedLevel", "coralLevel");
-        Debug.Log("Coral Cleaning Start!");
+        PlayerPrefs.SetInt("SelectedLevel", 2);
     }
 }

@@ -25,16 +25,7 @@ public class GameSceneManager : MonoBehaviour
 
     private void Update() => currentScene = SceneManager.GetActiveScene().name;
 
-    public void GoToScene(string sceneName)
-    {
-        SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
-        // string currentScene = SceneManager.GetActiveScene().name;
-        // SceneManager.LoadSceneAsync(sceneName);
-        // SceneManager.UnloadSceneAsync(currentScene);
-        // ARSession session = FindObjectOfType<ARSession>();
-        // Debug.Log("session: "+ session);
-        // session.Reset();
-    }
+    public void GoToScene(string sceneName) => SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
 
     public void Quit()
     {
@@ -44,7 +35,6 @@ public class GameSceneManager : MonoBehaviour
     public void ReturnMainMenu()
     {
         Time.timeScale = 1f;
-        // SceneManager.LoadScene("_Game");
     }
 
     public string CurrentScene() => currentScene;
