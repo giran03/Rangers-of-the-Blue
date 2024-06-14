@@ -12,5 +12,9 @@ public class PlayerData
     {
         playerName = profile.playerName;
         playerAge = profile.playerAge;
+        profile_TP_Level = profile.profile_TP_Level;
+        profile_TP_TotalScore = profile.profile_TP_TotalScore;
+        profile_SI_Level = profile.profile_SI_Level;
+        profile_SI_TotalScore = profile.profile_SI_TotalScore;
     }
 }
