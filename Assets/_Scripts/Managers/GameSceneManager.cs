@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.XR.ARFoundation;
 
 public class GameSceneManager : MonoBehaviour
 {
@@ -12,9 +11,10 @@ public class GameSceneManager : MonoBehaviour
         if (Instance != null && Instance != this)
             Destroy(gameObject);
         else
+        {
             Instance = this;
-
-        QualitySettings.vSyncCount = 1;
+            DontDestroyOnLoad(gameObject);
+        }
     }
 
     private void Start()

@@ -8,11 +8,11 @@ public class TrashpickingGameplayManager : MonoBehaviour
 
     [Header("Configs")]
     /// Game Levels:
-    /// 0 - Shore,
-    /// 1 - Sand,
+    /// 0 - Beach,
+    /// 1 - Shallow,
     /// 2 - Coral
     [SerializeField] GameObject[] levelCollection;
-    int selectedLevel;
+    int selectedLevel = 0;
 
     public int currentSelectedLevel;
 
@@ -26,8 +26,8 @@ public class TrashpickingGameplayManager : MonoBehaviour
 
     private void Start()
     {
-        selectedLevel = PlayerPrefs.GetInt("SelectedLevel");
-        Debug.Log("selectedLevel: " + selectedLevel);
+        selectedLevel = PlayerPrefs.GetInt("TP_SelectedLevel");
+        Debug.Log("selected TP Level is: " + selectedLevel);
         currentSelectedLevel = selectedLevel;
 
         levelCollection[selectedLevel].SetActive(true);

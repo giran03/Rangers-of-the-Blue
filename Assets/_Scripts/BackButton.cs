@@ -30,6 +30,6 @@ public class BackButton : MonoBehaviour
     {
         string menuSceneName = MenuLoader.GetMenuSceneName();
         if (Application.CanStreamedLevelBeLoaded(menuSceneName))
-            SceneManager.LoadScene(menuSceneName, LoadSceneMode.Single);
+            SceneManager.LoadSceneAsync(menuSceneName, LoadSceneMode.Single);
     }
 }
