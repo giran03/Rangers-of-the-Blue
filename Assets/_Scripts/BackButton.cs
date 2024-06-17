@@ -28,6 +28,10 @@ public class BackButton : MonoBehaviour
 
     public void BackButtonPressed()
     {
+        // save the current selected profile
+        // TODO: FIX ME
+        // SaveSystem.SaveCurrentProfile(PlayerPrefs.GetString("SelectedProfile"));
+
         string menuSceneName = MenuLoader.GetMenuSceneName();
         if (Application.CanStreamedLevelBeLoaded(menuSceneName))
             SceneManager.LoadSceneAsync(menuSceneName, LoadSceneMode.Single);

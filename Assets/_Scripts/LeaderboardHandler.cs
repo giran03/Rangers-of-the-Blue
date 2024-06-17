@@ -8,6 +8,7 @@ public class LeaderboardHandler : MonoBehaviour
     Transform entryTemplate;
     float templateHeight = 35f;
     List<Transform> highscoreEntryTransformList;
+    List<PlayerData> playerDataList;
 
     private void Awake()
     {
@@ -23,31 +24,59 @@ public class LeaderboardHandler : MonoBehaviour
         //     new() {profileName = "ddd", SI_highscore = 444, TP_highscore = 661},
         // };
 
+
+
+        // prints all of the store player data
+        // foreach (PlayerData data in playerDataList)
+        // {
+        //     Debug.Log($"- Player Name: {data.playerName}");
+        //     Debug.Log($"- TP Score: {data.profile_TP_TotalScore}");
+        //     Debug.Log($"- SI Score: {data.profile_SI_TotalScore}");
+        // }
+
         // get the highscores from json
-        string jsonString = PlayerPrefs.GetString("highscoreTable");
-        Highscores highscores = JsonUtility.FromJson<Highscores>(jsonString);
+        // string jsonString = PlayerPrefs.GetString("highscoreTable");
+        // Highscores highscores = JsonUtility.FromJson<Highscores>(jsonString);
 
         // TODO: SP Gamemode Sorting
         // sorted by Trash Picking Scores
-        for (int i = 0; i < highscores.highscoreEntryList.Count; i++)
+        // for (int i = 0; i < highscores.highscoreEntryList.Count; i++)
+        // {
+        //     for (int j = i + 1; j < highscores.highscoreEntryList.Count; j++)
+        //     {
+        //         if (highscores.highscoreEntryList[j].TP_highscore > highscores.highscoreEntryList[i].TP_highscore)
+        //         {
+        //             // swap
+        //             (highscores.highscoreEntryList[j], highscores.highscoreEntryList[i]) = (highscores.highscoreEntryList[i], highscores.highscoreEntryList[j]);
+        //         }
+        //     }
+        // }
+
+        // highscoreEntryTransformList = new();
+        // foreach (HighscoreEntry highscoreEntry in highscores.highscoreEntryList)
+        // {
+        //     CreateHighscoreEntryTransform(highscoreEntry, entryContainer, highscoreEntryTransformList);
+        // }
+
+        playerDataList = SaveSystem.GetPlayerData(); // Get data for all .fish files
+
+        for (int i = 0; i < playerDataList.Count; i++)
         {
-            for (int j = i + 1; j < highscores.highscoreEntryList.Count; j++)
+            for (int j = i + 1; j < playerDataList.Count; j++)
             {
-                if (highscores.highscoreEntryList[j].TP_highscore > highscores.highscoreEntryList[i].TP_highscore)
+                if (playerDataList[j].profile_SI_TotalScore > playerDataList[i].profile_SI_TotalScore)
                 {
-                    // swap
-                    HighscoreEntry temp = highscores.highscoreEntryList[i];
-                    highscores.highscoreEntryList[i] = highscores.highscoreEntryList[j];
-                    highscores.highscoreEntryList[j] = temp;
+                    (playerDataList[j], playerDataList[i]) = (playerDataList[i], playerDataList[j]);    // swap
                 }
             }
         }
 
         highscoreEntryTransformList = new();
-        foreach (HighscoreEntry highscoreEntry in highscores.highscoreEntryList)
+        foreach (PlayerData data in playerDataList)
         {
-            CreateHighscoreEntryTransform(highscoreEntry, entryContainer, highscoreEntryTransformList);
+            CreateHighscoreEntryTransform(data, entryContainer, highscoreEntryTransformList);
         }
+
     }
 
     public void AddHighscoreEntry(string profileName, int TP_Highscore, int SI_highscore)
@@ -69,21 +98,37 @@ public class LeaderboardHandler : MonoBehaviour
         PlayerPrefs.Save();
     }
 
-    private void CreateHighscoreEntryTransform(HighscoreEntry highscoreEntry, Transform container, List<Transform> transformList)
+    private void CreateHighscoreEntryTransform(PlayerData data, Transform container, List<Transform> transformList)
     {
         Transform entryTransform = Instantiate(entryTemplate, container);
         RectTransform entryRectTransform = entryTransform.GetComponent<RectTransform>();
         entryRectTransform.anchoredPosition = new Vector2(0f, -templateHeight * transformList.Count);
         entryTransform.gameObject.SetActive(true);
 
-        entryTransform.Find("Name Label").GetComponent<TextMeshProUGUI>().SetText(highscoreEntry.profileName);
-        entryTransform.Find("TP Score Label").GetComponent<TextMeshProUGUI>().SetText($"{highscoreEntry.TP_highscore}");
-        entryTransform.Find("SI Score Label").GetComponent<TextMeshProUGUI>().SetText($"{highscoreEntry.SI_highscore}");
+        entryTransform.Find("Name Label").GetComponent<TextMeshProUGUI>().SetText(data.playerName);
+        entryTransform.Find("TP Score Label").GetComponent<TextMeshProUGUI>().SetText($"{data.profile_TP_TotalScore}");
+        entryTransform.Find("SI Score Label").GetComponent<TextMeshProUGUI>().SetText($"{data.profile_SI_TotalScore}");
 
-        entryTransform.Find("Background").gameObject.SetActive(transformList.Count % 2 == 1);
+        entryTransform.Find("Background").gameObject.SetActive(transformList.Count % 2 == 1); // Assuming even/odd row background logic
 
         transformList.Add(entryTransform);
     }
+
+    // private void CreateHighscoreEntryTransform(HighscoreEntry highscoreEntry, Transform container, List<Transform> transformList)
+    // {
+    //     Transform entryTransform = Instantiate(entryTemplate, container);
+    //     RectTransform entryRectTransform = entryTransform.GetComponent<RectTransform>();
+    //     entryRectTransform.anchoredPosition = new Vector2(0f, -templateHeight * transformList.Count);
+    //     entryTransform.gameObject.SetActive(true);
+
+    //     entryTransform.Find("Name Label").GetComponent<TextMeshProUGUI>().SetText(highscoreEntry.profileName);
+    //     entryTransform.Find("TP Score Label").GetComponent<TextMeshProUGUI>().SetText($"{highscoreEntry.TP_highscore}");
+    //     entryTransform.Find("SI Score Label").GetComponent<TextMeshProUGUI>().SetText($"{highscoreEntry.SI_highscore}");
+
+    //     entryTransform.Find("Background").gameObject.SetActive(transformList.Count % 2 == 1);
+
+    //     transformList.Add(entryTransform);
+    // }
 
     private class Highscores
     {

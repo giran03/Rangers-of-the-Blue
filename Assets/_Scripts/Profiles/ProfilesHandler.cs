@@ -14,11 +14,22 @@ public class ProfilesHandler : MonoBehaviour
     string selectedProfile;
     bool isCreatingProfile = true;
 
+    [Header("Button Configs")]
+    [SerializeField] List<GameObject> nextButtonTransitionDisplay;
+    [SerializeField] List<GameObject> createButtonTransitionDisplay;
+
     [SerializeField] InputField inputField_profileCheck;
+
+    private void Awake()
+    {
+        // reset the selected profile player prefs | TODO: remove this; call it when returning to mainmenu or back button
+        SaveSystem.SelectedProfileName = null;
+    }
 
     private void Start()
     {
         UpdateOptions();
+        Debug.Log($"Selected profile from memory is: {SaveSystem.SelectedProfileName}");
     }
 
     private void Update()
@@ -37,7 +48,7 @@ public class ProfilesHandler : MonoBehaviour
             GetDropdownValue();
     }
 
-    void UpdateOptions()
+    public void UpdateOptions()
     {
         List<string> fileNames = GetPlayerFileNamesWithoutExtension();
 
@@ -55,41 +66,51 @@ public class ProfilesHandler : MonoBehaviour
     public void Button_CreateNewProfile()
     {
         isCreatingProfile = true;
-        selectedProfile = "";
+        selectedProfile = null;
     }
     public void Button_ExistingProfile() => isCreatingProfile = false;
 
     public void GetDropdownValue()
     {
-        selectedProfile = dropdown_Profiles.options[dropdown_Profiles.value].text;
-        Debug.Log($"Dropdown Selected: {selectedProfile}");
+        if (dropdown_Profiles.options.Count != 0)
+        {
+            selectedProfile = dropdown_Profiles.options[dropdown_Profiles.value].text;
+            Debug.Log($"Dropdown Selected: {selectedProfile}");
+        }
     }
 
+    // new profile create button
     public void Button_CreateProfile()
     {
         Profile.Instance.playerName = _name;
         Profile.Instance.playerAge = _age;
         Profile.Instance.SavePlayer();
+        selectedProfile = _name;
 
+        inputField_name.text = "";
+        inputField_age.text = "";
+
+        Button_SelectThisProfile();
         UpdateOptions();
         Debug.Log($"NEW PROFILE CREATED! name: {Profile.Instance.playerName} , age: {Profile.Instance.playerAge}");
+
+        DisplayTransition(createButtonTransitionDisplay);
     }
 
-    public static void PrintPlayerFileNames()
+    public void Button_NextButton()
     {
-        string[] potentialFiles = Directory.EnumerateFiles(Application.persistentDataPath, "*.fish").ToArray();
-
-        if (potentialFiles.Length == 0)
+        if (selectedProfile == null)
         {
-            Debug.Log("No .fish files found in persistent data path.");
+            Debug.Log($"No selected profile!!!");
             return;
         }
+        DisplayTransition(nextButtonTransitionDisplay);
+    }
 
-        foreach (string filePath in potentialFiles)
-        {
-            string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(filePath);
-            Debug.Log($"File Name: {fileNameWithoutExtension}");
-        }
+    public void Button_SelectThisProfile()
+    {
+        SaveSystem.SelectedProfileName = selectedProfile;
+        SaveSystem.LoadPlayer(SaveSystem.SelectedProfileName);
     }
 
     public static List<string> GetPlayerFileNamesWithoutExtension()
@@ -112,14 +133,56 @@ public class ProfilesHandler : MonoBehaviour
         return fileNames;
     }
 
+    public void DisplayTransition(List<GameObject> displayList)
+    {
+        Debug.Log($"Selected profile is {selectedProfile}... PROCEEDING~");
+        foreach (var item in displayList)
+            item.SetActive(!item.activeSelf);
+    }
+
+    #region EDITOR ONLY
+    public static void PrintPlayerFileNames()
+    {
+        string[] potentialFiles = Directory.EnumerateFiles(Application.persistentDataPath, "*.fish").ToArray();
+
+        if (potentialFiles.Length == 0)
+        {
+            Debug.Log("No .fish files found in persistent data path.");
+            return;
+        }
+
+        foreach (string filePath in potentialFiles)
+        {
+            string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(filePath);
+            Debug.Log($"File Name: {fileNameWithoutExtension}");
+        }
+    }
+
     public void PrintProfile()
     {
         try
         {
             string loadProfile = inputField_profileCheck.text;
 
-            PlayerData player = Profile.Instance.LoadPlayer(loadProfile);
+            if (loadProfile == "delAll")
+            {
+                // SaveSystem.DeleteAllFiles(loadProfile);
+                return;
+            }
+
+            PlayerData player = SaveSystem.LoadPlayer(loadProfile);
             Debug.Log($"Read Profile From save; Name: {player.playerName} Age: {player.playerAge} TP Highscore {player.profile_TP_TotalScore}");
+            Debug.Log($"SAVE FILE: {player.playerName} TP: Level {player.profile_TP_Level + 1} score lvl-1: {player.profile_TP_Level_1_Score}");
+            
+            player.scannedSpeciesList = new();
+            Debug.Log($"Species Scanned COUNT: {player.scannedSpeciesList.Count}");
+            foreach (Species species in player.scannedSpeciesList)
+            {
+                Debug.Log($"Scanned Species is: {species}");
+            }
+
+            Debug.Log($"Printing properties~~~");
+            PrintProfileProperties(loadProfile);
         }
         catch (System.Exception)
         {
@@ -127,5 +190,24 @@ public class ProfilesHandler : MonoBehaviour
             throw;
         }
     }
+
+    public void PrintProfileProperties(string loadProfile)
+    {
+        PlayerData player = SaveSystem.LoadPlayer(loadProfile);
+        if (player != null)
+        {
+            var properties = player.GetType().GetProperties();
+            foreach (var prop in properties)
+            {
+                object propertyValue = prop.GetValue(player);
+                Debug.Log($"{prop.Name}: {propertyValue}");
+            }
+        }
+        else
+        {
+            Debug.Log("No player data found for the provided profile.");
+        }
+    }
+    #endregion
 }
 

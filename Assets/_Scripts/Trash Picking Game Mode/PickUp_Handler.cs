@@ -1,20 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.Burst.CompilerServices;
 using UnityEngine;
-using UnityEngine.XR.ARFoundation;
-using UnityEngine.XR.ARSubsystems;
 
 public class PickUp_Handler : MonoBehaviour
 {
+    [SerializeField] Camera arCamera;
+
     [Header("Configs")]
     [SerializeField] GameObject hud_icon_grab;
     [SerializeField] GameObject hud_icon_deposit;
     [SerializeField] GameObject hud_button_grab;
-    [SerializeField] GameObject hud_button_deposit;
+    // [SerializeField] GameObject hud_button_deposit;
     [SerializeField] TMP_Text hud_label_trashPickUp;
     [SerializeField] TMP_Text hud_label_netBag;
     [SerializeField] GameObject hud_label_netBagFull;
+
+    [Header("Timer Config")]
+    [SerializeField] GameObject hud_label_timerHasRunOut;
+    [SerializeField] TMP_Text hud_label_timerText;
+    public float timeRemaining = 10;
+    public bool timerIsRunning;
 
 
     // object pooling
@@ -30,17 +37,82 @@ public class PickUp_Handler : MonoBehaviour
 
     [Header("Net Configs")]
     [SerializeField] int netBag_capacity = 10;
-    int netBag_currentCapacity = 0;
+    int netBag_currentCapacity;
     bool isBagFullText;
 
     // scores
-    int score_trashPickUp = 0;
+    int score_trashPickUp;
+
+    string profile;
+    PlayerData data;
 
     Vector3 screenCenter = new(0.5f, 0.5f, 0f);
 
+    public static PickUp_Handler Instance;
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+            Destroy(gameObject);
+        else
+            Instance = this;
+
+        Debug.Log($"Selected Profile is: {SaveSystem.SelectedProfileName}");
+
+        profile = SaveSystem.SelectedProfileName;
+        data = Profile.Instance.LoadPlayer(profile);
+    }
+
+    private void Start()
+    {
+        timerIsRunning = true;
+        score_trashPickUp = 0;
+        netBag_currentCapacity = 0;
+    }
+
     void Update()
     {
-        Ray ray = Camera.main.ViewportPointToRay(screenCenter);
+        //TIMER
+        if (timerIsRunning)
+        {
+            if (timeRemaining > 0)
+            {
+                timeRemaining -= Time.deltaTime;
+                DisplayTime(timeRemaining);
+            }
+            else
+            {
+                Debug.Log("Time has run out!");
+                hud_label_timerHasRunOut.SetActive(true);
+                timeRemaining = 0;
+
+                switch (data.profile_TP_Level)
+                {
+                    case 0:
+                        data.profile_TP_Level_1_Score = score_trashPickUp;
+                        Debug.Log($"Im saving for {data.playerName} with {data.profile_TP_Level_1_Score}");
+                        break;
+                    case 1:
+                        data.profile_TP_Level_2_Score = score_trashPickUp;
+                        break;
+                    case 3:
+                        data.profile_TP_Level_3_Score = score_trashPickUp;
+                        break;
+                }
+
+                Debug.Log($"Saving data for {data.playerName} with score of {score_trashPickUp} for level {data.profile_TP_Level + 1}");
+
+                // TODO:ADD SCORE SAVING!!!!
+                Profile.Instance.UpdateData(data);
+
+
+                //TODO: Add coroutine to end screen
+                timerIsRunning = false;
+            }
+        }
+
+        if (!timerIsRunning) return;
+        Ray ray = arCamera.ViewportPointToRay(screenCenter);
         if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
         {
             if (hit.collider.CompareTag("Trash"))
@@ -52,21 +124,21 @@ public class PickUp_Handler : MonoBehaviour
             if (hit.collider.CompareTag("Deposit"))
             {
                 hud_icon_deposit.SetActive(true);
-                hud_button_deposit.SetActive(true);
+                // hud_button_deposit.SetActive(true);
                 Debug.Log("Deposit trash Here~!");
             }
         }
         else
         {
-            hud_button_deposit.SetActive(false);
+            // hud_button_deposit.SetActive(false);
             hud_icon_deposit.SetActive(false);
             hud_icon_grab.SetActive(false);
             hud_button_grab.SetActive(false);
         }
 
         // sets score
-        hud_label_trashPickUp.SetText($"Score: {score_trashPickUp}");
-        hud_label_netBag.SetText($"Net-bag: {netBag_currentCapacity}");
+        hud_label_trashPickUp.SetText($"SCORE: {score_trashPickUp}");
+        hud_label_netBag.SetText($"{netBag_currentCapacity}");
     }
 
     public void PickUpButton()
@@ -84,7 +156,7 @@ public class PickUp_Handler : MonoBehaviour
             {
                 Debug.Log("You'r net bag is full!!!\nDeposit trash first");
                 if (!isBagFullText)
-                    StartCoroutine(netBagFull());
+                    StartCoroutine(NetBagFull());
             }
         }
     }
@@ -95,7 +167,17 @@ public class PickUp_Handler : MonoBehaviour
         netBag_currentCapacity = 0;
     }
 
-    IEnumerator netBagFull()
+    void DisplayTime(float timeToDisplay)
+    {
+        timeToDisplay += 1;
+
+        float minutes = Mathf.FloorToInt(timeToDisplay / 60);
+        float seconds = Mathf.FloorToInt(timeToDisplay % 60);
+
+        hud_label_timerText.SetText(string.Format("{0:00}:{1:00}", minutes, seconds));
+    }
+
+    IEnumerator NetBagFull()
     {
         isBagFullText = true;
         hud_label_netBagFull.SetActive(true);

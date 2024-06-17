@@ -20,6 +20,7 @@ public class SI_Manager : MonoBehaviour
     private void Start()
     {
         dispaly_scanInfoBox.SetActive(false);
+        Debug.Log($"Currently Selected profile is: {PlayerPrefs.GetString("SelectedProfile")}");
     }
 
     void Update()

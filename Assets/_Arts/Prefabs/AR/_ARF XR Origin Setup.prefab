@@ -515,6 +515,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6043576410008391383}
   - component: {fileID: 1376526484492756053}
+  - component: {fileID: 4380915197777112285}
   - component: {fileID: 457011283295305010}
   m_Layer: 0
   m_Name: XR Origin (AR Rig)
@@ -556,6 +557,19 @@ MonoBehaviour:
   m_CameraFloorOffsetObject: {fileID: 5740509250014986283}
   m_RequestedTrackingOriginMode: 1
   m_CameraYOffset: 1
+--- !u!114 &4380915197777112285
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3635619563289110282}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 728ad7fae8e460a4ba41265c7308d757, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AnchorPrefab: {fileID: 0}
 --- !u!114 &457011283295305010
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -657,6 +671,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7438891826938017979}
+  - component: {fileID: 8459558939455113998}
   m_Layer: 0
   m_Name: _ARF XR Origin Setup
   m_TagString: Untagged
@@ -684,6 +699,18 @@ Transform:
   - {fileID: 6043576410008391383}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8459558939455113998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5946500813944882466}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7254d242a6c9e5743911b867f4553fe2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8194805623820822472
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,6 +1,4 @@
 using UnityEngine;
-using UnityEngine.XR.ARFoundation;
-
 
 public class TrashpickingGameplayManager : MonoBehaviour
 {
@@ -12,9 +10,6 @@ public class TrashpickingGameplayManager : MonoBehaviour
     /// 1 - Shallow,
     /// 2 - Coral
     [SerializeField] GameObject[] levelCollection;
-    int selectedLevel = 0;
-
-    public int currentSelectedLevel;
 
     void Awake()
     {
@@ -22,14 +17,8 @@ public class TrashpickingGameplayManager : MonoBehaviour
             Destroy(gameObject);
         else
             Instance = this;
-    }
 
-    private void Start()
-    {
-        selectedLevel = PlayerPrefs.GetInt("TP_SelectedLevel");
-        Debug.Log("selected TP Level is: " + selectedLevel);
-        currentSelectedLevel = selectedLevel;
-
-        levelCollection[selectedLevel].SetActive(true);
+        levelCollection[PlayerPrefs.GetInt("TP_SelectedLevel")].SetActive(true);
+        Debug.Log($"Player prefs level {PlayerPrefs.GetInt("TP_SelectedLevel")}");
     }
 }

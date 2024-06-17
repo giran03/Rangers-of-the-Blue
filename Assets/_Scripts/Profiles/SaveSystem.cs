@@ -2,9 +2,26 @@ using UnityEngine;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Linq;
+using System.Collections.Generic;
+using UnityEditor;
 
 public static class SaveSystem
 {
+    static int _highestLevelReached;
+    public static string _selectedProfile;
+    public static string SelectedProfileName
+    {
+        get { return _selectedProfile = PlayerPrefs.GetString("SelectedProfile"); }
+        set { PlayerPrefs.SetString("SelectedProfile", value); }
+    }
+
+    public static int TP_GetHighestLevel()
+    {
+        PlayerData data = LoadPlayer(SelectedProfileName);
+        Debug.Log($"TP highest level of {data.playerName} is {data.profile_TP_Level}");
+        return _highestLevelReached = data.profile_TP_Level;
+    }
+
     public static void SavePlayer(Profile profile)
     {
         BinaryFormatter formatter = new();
@@ -13,10 +30,21 @@ public static class SaveSystem
 
         PlayerData data = new(profile);
 
-        Debug.Log($"Saved Profile for: {profile.playerName}");
-        Debug.Log($"Saved in path: {path}");
+        Debug.Log($"Saved Profile for: {profile.playerName}\nSaved in path: {path}");
 
         formatter.Serialize(stream, data);
+        stream.Close();
+    }
+
+    public static void SaveExistingPlayer(PlayerData newData)
+    {
+        BinaryFormatter formatter = new();
+        string path = Application.persistentDataPath + $"/{newData.playerName}.fish";
+        FileStream stream = new(path, FileMode.Truncate);
+
+        Debug.Log($"UPDATED PROFILE for: {newData.playerName}\nSaved in path: {path}");
+
+        formatter.Serialize(stream, newData);
         stream.Close();
     }
 
@@ -37,12 +65,13 @@ public static class SaveSystem
 
         if (File.Exists(filePath))
         {
-            BinaryFormatter formatter = new BinaryFormatter();
-            FileStream stream = new FileStream(filePath, FileMode.Open);
+            BinaryFormatter formatter = new();
+            FileStream stream = new(filePath, FileMode.Open);
 
             try
             {
                 PlayerData data = formatter.Deserialize(stream) as PlayerData;
+                Debug.Log($"!!!Loaded player data for {data.playerName}");
                 return data;
             }
             catch (System.Exception)
@@ -61,4 +90,78 @@ public static class SaveSystem
             return null;
         }
     }
+
+    // public static void SaveCurrentProfile(string profile)
+    // {
+    //     // string profile = PlayerPrefs.GetString("SelectedProfile");
+    //     SavePlayer(GetProfileByName(profile));
+    //     Debug.Log($"SAVED CURRENT PROFILE FOR {profile}!");
+    // }
+
+
+    public static List<PlayerData> GetPlayerData()
+    {
+        List<PlayerData> playerDataList = new();
+        string[] potentialFiles = Directory.EnumerateFiles(Application.persistentDataPath, "*.fish").ToArray();
+
+        if (potentialFiles.Length == 0)
+        {
+            return playerDataList;
+        }
+
+        foreach (string filePath in potentialFiles)
+        {
+            if (File.Exists(filePath))
+            {
+                BinaryFormatter formatter = new();
+                FileStream stream = new(filePath, FileMode.Open);
+
+                try
+                {
+                    PlayerData data = formatter.Deserialize(stream) as PlayerData;
+                    playerDataList.Add(data);
+                }
+                catch (System.Exception)
+                {
+                    Debug.LogError($"Error loading player data from {filePath}");
+                    throw;
+                }
+                finally
+                {
+                    stream.Close();
+                }
+            }
+            else
+            {
+                Debug.LogError($"Save file not found: {filePath}");
+            }
+        }
+
+        return playerDataList;
+    }
+
+    // public static void DeleteAllFiles(string confirmationKey)
+    // {
+    //     if (confirmationKey == "delAll" && EditorUtility.DisplayDialog("Warning", "Are you sure you want to delete all save files? This action is irreversible.", "Yes", "No"))
+    //     {
+    //         Debug.LogError("WARNING: Simulating deletion of all save files. In a real application, this would delete all save files!");
+    //         string[] potentialFiles = Directory.EnumerateFiles(Application.persistentDataPath, "*.fish").ToArray();
+
+    //         if (potentialFiles.Length == 0)
+    //         {
+    //             Debug.Log("No .fish files found in the specified directory.");
+    //             return;
+    //         }
+    //         Debug.Log("Found Save Files:");
+    //         foreach (string filePath in potentialFiles)
+    //         {
+    //             Debug.Log($"- {Path.GetFileNameWithoutExtension(filePath)}");
+    //             File.Delete(filePath);
+    //         }
+    //         ProfilesHandler profilesHandler = new();
+    //         profilesHandler.UpdateOptions();
+    //     }
+    //     else
+    //         Debug.Log("Save file deletion canceled.");
+    // }
 }
