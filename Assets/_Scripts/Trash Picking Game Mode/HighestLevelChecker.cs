@@ -15,6 +15,7 @@ public class HighestLevelChecker : MonoBehaviour
 
     public void ButtonPress(Button button)
     {
+        TP_LevelSelectHandler.isDataLoaded = false;
         if (SaveSystem.SelectedProfileName == null)
         {
             Debug.Log("Selected profile is NULL!");
@@ -53,6 +54,11 @@ public class HighestLevelChecker : MonoBehaviour
         Debug.Log($"PRESSED BUTTON {_buttonName} of level {PlayerPrefs.GetInt("TP_SelectedLevel")}");
     }
 
+    public void Button_ResetSelectedProfile()
+    {
+        SaveSystem.SelectedProfileName = null;
+    }
+
     void NextButton(List<GameObject> gameObjectsList)
     {
         int level = SaveSystem.TP_GetHighestLevel();
@@ -61,12 +67,15 @@ public class HighestLevelChecker : MonoBehaviour
         switch (level)
         {
             case 0:
+                DeActivateButton(gameObjectsList);
                 ActivateButton(gameObjectsList, 1);
                 break;
             case 1:
+                DeActivateButton(gameObjectsList);
                 ActivateButton(gameObjectsList, 2);
                 break;
             case 2:
+                DeActivateButton(gameObjectsList);
                 ActivateButton(gameObjectsList, 3);
                 break;
         }
@@ -75,8 +84,14 @@ public class HighestLevelChecker : MonoBehaviour
     void ActivateButton(List<GameObject> gameObjectList, int level)
     {
         for (int i = 0; i < level; i++)
-        {
             gameObjectList[i].SetActive(true);
-        }
+    }
+
+
+    void DeActivateButton(List<GameObject> gameObjectList)
+    {
+        Debug.Log("Deactivating buttons~~~~~");
+        for (int i = 0; i < gameObjectList.Count; i++)
+            gameObjectList[i].SetActive(false);
     }
 }

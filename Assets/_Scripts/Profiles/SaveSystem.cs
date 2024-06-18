@@ -7,7 +7,6 @@ using UnityEditor;
 
 public static class SaveSystem
 {
-    static int _highestLevelReached;
     public static string _selectedProfile;
     public static string SelectedProfileName
     {
@@ -15,11 +14,13 @@ public static class SaveSystem
         set { PlayerPrefs.SetString("SelectedProfile", value); }
     }
 
+    public static void ResetSelectedProfile() => SelectedProfileName = null;
+
     public static int TP_GetHighestLevel()
     {
         PlayerData data = LoadPlayer(SelectedProfileName);
         Debug.Log($"TP highest level of {data.playerName} is {data.profile_TP_Level}");
-        return _highestLevelReached = data.profile_TP_Level;
+        return data.profile_TP_Level;
     }
 
     public static void SavePlayer(Profile profile)
@@ -72,16 +73,13 @@ public static class SaveSystem
             {
                 PlayerData data = formatter.Deserialize(stream) as PlayerData;
                 Debug.Log($"!!!Loaded player data for {data.playerName}");
+                stream.Close();
                 return data;
             }
             catch (System.Exception)
             {
                 Debug.LogError("Error loading player data:");
                 return null;
-            }
-            finally
-            {
-                stream.Close();
             }
         }
         else

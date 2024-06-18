@@ -31,4 +31,6 @@ public class PlayerData
         profile_SI_TotalScore = profile.profile_SI_TotalScore;
         scannedSpeciesList = profile.scannedSpeciesList;
     }
+    public PlayerData()
+    { }
 }

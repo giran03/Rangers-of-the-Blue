@@ -40,8 +40,11 @@ public class PickUp_Handler : MonoBehaviour
     int netBag_currentCapacity;
     bool isBagFullText;
 
+    [Header("End Screen Configs")]
+    [SerializeField] GameObject display_EndScreen;
+
     // scores
-    int score_trashPickUp;
+    public static int score_trashPickUp;
 
     string profile;
     PlayerData data;
@@ -68,6 +71,8 @@ public class PickUp_Handler : MonoBehaviour
         timerIsRunning = true;
         score_trashPickUp = 0;
         netBag_currentCapacity = 0;
+
+        display_EndScreen.SetActive(false);
     }
 
     void Update()
@@ -86,28 +91,41 @@ public class PickUp_Handler : MonoBehaviour
                 hud_label_timerHasRunOut.SetActive(true);
                 timeRemaining = 0;
 
-                switch (data.profile_TP_Level)
+                PlayerData newData = new();
+
+                switch (PlayerPrefs.GetInt("TP_SelectedLevel"))
                 {
                     case 0:
-                        data.profile_TP_Level_1_Score = score_trashPickUp;
-                        Debug.Log($"Im saving for {data.playerName} with {data.profile_TP_Level_1_Score}");
+                        if (data.profile_TP_Level < 1)
+                            newData.profile_TP_Level = 1;
+
+                        newData.profile_TP_Level_1_Score = score_trashPickUp;
+                        Debug.Log($"Im saving for {data.playerName} with {newData.profile_TP_Level_1_Score}");
                         break;
                     case 1:
-                        data.profile_TP_Level_2_Score = score_trashPickUp;
+                        if (data.profile_TP_Level < 2)
+                            newData.profile_TP_Level = 2;
+
+                        newData.profile_TP_Level_2_Score = score_trashPickUp;
+                        Debug.Log($"Im saving for {data.playerName} with {newData.profile_TP_Level_2_Score}");
                         break;
-                    case 3:
-                        data.profile_TP_Level_3_Score = score_trashPickUp;
+                    case 2:
+                        newData.profile_TP_Level = 2; // max
+                        newData.profile_TP_Level_3_Score = score_trashPickUp;
+                        Debug.Log($"Im saving for {data.playerName} with {newData.profile_TP_Level_3_Score}");
                         break;
                 }
 
                 Debug.Log($"Saving data for {data.playerName} with score of {score_trashPickUp} for level {data.profile_TP_Level + 1}");
 
                 // TODO:ADD SCORE SAVING!!!!
-                Profile.Instance.UpdateData(data);
+                Profile.Instance.UpdateData(newData);
 
 
                 //TODO: Add coroutine to end screen
                 timerIsRunning = false;
+
+                StartCoroutine(GameEnd());
             }
         }
 
@@ -139,6 +157,12 @@ public class PickUp_Handler : MonoBehaviour
         // sets score
         hud_label_trashPickUp.SetText($"SCORE: {score_trashPickUp}");
         hud_label_netBag.SetText($"{netBag_currentCapacity}");
+    }
+
+    IEnumerator GameEnd()
+    {
+        yield return new WaitForSeconds(1.2f);
+        display_EndScreen.SetActive(true);
     }
 
     public void PickUpButton()

@@ -69,7 +69,7 @@ public class Profile : MonoBehaviour
     {
         Debug.Log("Data being updated!~");
         PlayerData playerData = newData;
-        PlayerData oldData = SaveSystem.LoadPlayer(newData.playerName);
+        PlayerData oldData = LoadPlayer(SaveSystem.SelectedProfileName);
 
         //TODO: Add high score total and score checks
         // TP GAMEMODE
@@ -78,15 +78,15 @@ public class Profile : MonoBehaviour
         // SCORE CHECKS
         if (oldData.profile_TP_Level_1_Score < playerData.profile_TP_Level_1_Score)
             oldData.profile_TP_Level_1_Score = playerData.profile_TP_Level_1_Score;
-        else Debug.Log($"KEEPING OLD SCORE");
+        else Debug.Log($"KEEPING OLD SCORE FOR LEVEL 1 {oldData.profile_TP_Level_1_Score}");
 
         if (oldData.profile_TP_Level_2_Score < playerData.profile_TP_Level_2_Score)
             oldData.profile_TP_Level_2_Score = playerData.profile_TP_Level_2_Score;
-        else Debug.Log($"KEEPING OLD SCORE");
+        else Debug.Log($"KEEPING OLD SCORE FOR LEVEL 2 {oldData.profile_TP_Level_2_Score}");
 
         if (oldData.profile_TP_Level_3_Score < playerData.profile_TP_Level_3_Score)
             oldData.profile_TP_Level_3_Score = playerData.profile_TP_Level_3_Score;
-        else Debug.Log($"KEEPING OLD SCORE");
+        else Debug.Log($"KEEPING OLD SCORE FOR LEVEL 3 of {oldData.profile_TP_Level_3_Score}");
 
         oldData.profile_TP_TotalScore = oldData.profile_TP_Level_1_Score + oldData.profile_TP_Level_2_Score + oldData.profile_TP_Level_3_Score; // Update total score if needed
 
