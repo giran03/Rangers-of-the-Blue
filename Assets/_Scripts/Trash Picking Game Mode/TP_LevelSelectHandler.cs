@@ -37,19 +37,25 @@ public class TP_LevelSelectHandler : MonoBehaviour
         label_LVL2_Highscore.SetText($"{playerData.profile_TP_Level_2_Score}");
         label_LVL3_Highscore.SetText($"{playerData.profile_TP_Level_3_Score}");
 
-        if (playerData.profile_TP_Level_1_Score > 0)
+        if (playerData.stage_1_cleared)
             checkmark_LVL1.SetActive(true);
-        if (playerData.profile_TP_Level_2_Score > 0)
+        else checkmark_LVL1.SetActive(false);
+
+        if (playerData.stage_2_cleared)
             checkmark_LVL2.SetActive(true);
-        if (playerData.profile_TP_Level_3_Score > 0)
+        else checkmark_LVL2.SetActive(false);
+
+        if (playerData.stage_3_cleared)
             checkmark_LVL3.SetActive(true);
+        else checkmark_LVL3.SetActive(false);
     }
 
     public void Button_LoadDataInfo()
     {
         if (isDataLoaded) return;
 
-        playerData = Profile.Instance.LoadPlayer(SaveSystem.SelectedProfileName);
+        // CHANGED FROM Profile's load player func ⚠️⚠️⚠️⚠️⚠️⚠️
+        playerData = SaveSystem.LoadPlayer(SaveSystem.SelectedProfileName);
         isDataLoaded = true;
     }
 

@@ -10,25 +10,37 @@ public class LeaderboardHandler : MonoBehaviour
     List<Transform> highscoreEntryTransformList;
     List<PlayerData> playerDataList;
 
+    public static LeaderboardHandler Instance;
     private void Awake()
     {
+        if (Instance != null && Instance != this)
+            Destroy(gameObject);
+        else
+            Instance = this;
+
         entryContainer = transform.Find("HighscoreEntryContainer");
         entryTemplate = entryContainer.Find("HighscoreEntryTemplate");
         entryTemplate.gameObject.SetActive(false);
 
+        RefreshLeaderboards();
+    }
+
+    public void RefreshLeaderboards()
+    {
         playerDataList = SaveSystem.GetPlayerData(); // Get data for all .fish files
 
-        // sort by TP SCORES
-        for (int i = 0; i < playerDataList.Count; i++)
-        {
-            for (int j = i + 1; j < playerDataList.Count; j++)
-            {
-                if (playerDataList[j].profile_TP_TotalScore > playerDataList[i].profile_TP_TotalScore)
+        if (playerDataList != null)
+            if (playerDataList.Count > 0)
+                for (int i = 0; i < playerDataList.Count; i++) // sort by TP SCORES
                 {
-                    (playerDataList[j], playerDataList[i]) = (playerDataList[i], playerDataList[j]);    // swap
+                    for (int j = i + 1; j < playerDataList.Count; j++)
+                    {
+                        if (playerDataList[j].profile_TP_TotalScore > playerDataList[i].profile_TP_TotalScore)
+                        {
+                            (playerDataList[j], playerDataList[i]) = (playerDataList[i], playerDataList[j]);    // swap
+                        }
+                    }
                 }
-            }
-        }
 
         highscoreEntryTransformList = new();
         foreach (PlayerData data in playerDataList)

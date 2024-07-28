@@ -3,7 +3,6 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Linq;
 using System.Collections.Generic;
-using UnityEditor;
 
 public static class SaveSystem
 {
@@ -113,20 +112,16 @@ public static class SaveSystem
             {
                 BinaryFormatter formatter = new();
                 FileStream stream = new(filePath, FileMode.Open);
-
                 try
                 {
                     PlayerData data = formatter.Deserialize(stream) as PlayerData;
                     playerDataList.Add(data);
+                    stream.Close();
                 }
                 catch (System.Exception)
                 {
                     Debug.LogError($"Error loading player data from {filePath}");
                     throw;
-                }
-                finally
-                {
-                    stream.Close();
                 }
             }
             else
@@ -138,28 +133,25 @@ public static class SaveSystem
         return playerDataList;
     }
 
-    // public static void DeleteAllFiles(string confirmationKey)
-    // {
-    //     if (confirmationKey == "delAll" && EditorUtility.DisplayDialog("Warning", "Are you sure you want to delete all save files? This action is irreversible.", "Yes", "No"))
-    //     {
-    //         Debug.LogError("WARNING: Simulating deletion of all save files. In a real application, this would delete all save files!");
-    //         string[] potentialFiles = Directory.EnumerateFiles(Application.persistentDataPath, "*.fish").ToArray();
+    public static void DeleteAllFiles(string confirmationKey)
+    {
+        if (confirmationKey == "deleteAll")
+        {
+            string[] potentialFiles = Directory.EnumerateFiles(Application.persistentDataPath, "*.fish").ToArray();
 
-    //         if (potentialFiles.Length == 0)
-    //         {
-    //             Debug.Log("No .fish files found in the specified directory.");
-    //             return;
-    //         }
-    //         Debug.Log("Found Save Files:");
-    //         foreach (string filePath in potentialFiles)
-    //         {
-    //             Debug.Log($"- {Path.GetFileNameWithoutExtension(filePath)}");
-    //             File.Delete(filePath);
-    //         }
-    //         ProfilesHandler profilesHandler = new();
-    //         profilesHandler.UpdateOptions();
-    //     }
-    //     else
-    //         Debug.Log("Save file deletion canceled.");
-    // }
+            if (potentialFiles.Length == 0)
+            {
+                Debug.Log("No .fish files found in the specified directory.");
+                return;
+            }
+            Debug.Log("Found Save Files:");
+            foreach (string filePath in potentialFiles)
+            {
+                Debug.Log($"- {Path.GetFileNameWithoutExtension(filePath)}");
+                File.Delete(filePath);
+            }
+            ProfilesHandler profilesHandler = new();
+            profilesHandler.UpdateOptions();
+        }
+    }
 }

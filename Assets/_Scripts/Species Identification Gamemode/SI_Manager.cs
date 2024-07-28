@@ -13,18 +13,42 @@ public class SI_Manager : MonoBehaviour
     [SerializeField] TMP_Text label_conservationStatus;
     [SerializeField] TMP_Text label_kingdom;
 
+    [Header("Timer Config")]
+    [SerializeField] GameObject hud_label_timerHasRunOut;
+    [SerializeField] TMP_Text hud_label_timerText;
+    public float timeRemaining = 10;
+    public bool timerIsRunning;
+
     List<Species> ScannedSpeciesCollection = new();
 
     Vector3 screenCenter = new(0.5f, 0.5f, 0f);
 
     private void Start()
     {
+        SaveSystem.SelectedProfileName = "cici";
         dispaly_scanInfoBox.SetActive(false);
         Debug.Log($"Currently Selected profile is: {PlayerPrefs.GetString("SelectedProfile")}");
+
+        timerIsRunning = true;
     }
 
     void Update()
     {
+        if (timerIsRunning)
+        {
+            if (timeRemaining > 0)
+            {
+                timeRemaining -= Time.deltaTime;
+                DisplayTime(timeRemaining);
+            }
+            else
+            {
+                Debug.Log("Time has run out!");
+            }
+        }
+
+        if (!timerIsRunning) return;
+
         Ray ray = Camera.main.ViewportPointToRay(screenCenter);
         if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
         {
@@ -44,6 +68,17 @@ public class SI_Manager : MonoBehaviour
             dispaly_scanInfoBox.SetActive(false);
             Debug.Log("No species beings scanned!");
         }
+    }
+
+    // TIMER
+    void DisplayTime(float timeToDisplay)
+    {
+        timeToDisplay += 1;
+
+        float minutes = Mathf.FloorToInt(timeToDisplay / 60);
+        float seconds = Mathf.FloorToInt(timeToDisplay % 60);
+
+        hud_label_timerText.SetText(string.Format("{0:00}:{1:00}", minutes, seconds));
     }
 
     void GetSpeciesInfo(string speciesName)
@@ -72,7 +107,7 @@ public class SI_Manager : MonoBehaviour
     {
         switch (speciesName)
         {
-            // common species
+            // least concern species
             case "Bangus":
                 Debug.Log("Scanned Bangus~\n +5 points");
                 break;
@@ -85,7 +120,7 @@ public class SI_Manager : MonoBehaviour
                 Debug.Log("Scanned Green Sea Turtle~\n +75 points");
                 break;
         }
-        
+
         Debug.Log($"The Scanned Species Collection Count is {ScannedSpeciesCollection.Count}");
     }
 }

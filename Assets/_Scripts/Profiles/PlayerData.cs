@@ -12,6 +12,11 @@ public class PlayerData
     public int profile_TP_TotalScore;
     public int profile_SI_Level;
     public int profile_SI_TotalScore;
+
+    // level clear
+    public bool stage_1_cleared;
+    public bool stage_2_cleared;
+    public bool stage_3_cleared;
     public List<Species> scannedSpeciesList;
 
     public PlayerData(Profile profile)
@@ -30,6 +35,10 @@ public class PlayerData
         profile_SI_Level = profile.profile_SI_Level;
         profile_SI_TotalScore = profile.profile_SI_TotalScore;
         scannedSpeciesList = profile.scannedSpeciesList;
+
+        stage_1_cleared = profile.stage_1_cleared;
+        stage_2_cleared = profile.stage_2_cleared;
+        stage_3_cleared = profile.stage_3_cleared;
     }
     public PlayerData()
     { }

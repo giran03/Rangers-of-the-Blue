@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Lean.Gui;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -35,7 +36,7 @@ public class HighestLevelChecker : MonoBehaviour
         }
     }
 
-    // BUTTON | setting the selected level before playing; saved in "TP_SelectedLevel" PlayerPrefs.
+    // BUTTON | setting the selected level before playing; saved in string key "TP_SelectedLevel" in PlayerPrefs.
     public void Button_LevelButtonPress(string buttonLevel)
     {
         switch (buttonLevel)
@@ -56,28 +57,35 @@ public class HighestLevelChecker : MonoBehaviour
 
     public void Button_ResetSelectedProfile()
     {
-        SaveSystem.SelectedProfileName = null;
+        if (SaveSystem.SelectedProfileName != null)
+            SaveSystem.SelectedProfileName = null;
+        LeaderboardHandler.Instance.RefreshLeaderboards();
     }
 
     void NextButton(List<GameObject> gameObjectsList)
     {
-        int level = SaveSystem.TP_GetHighestLevel();
-        Debug.Log($"Highest level of this player in TP is: {level}");
+        string profile = SaveSystem.SelectedProfileName;
+        PlayerData data = SaveSystem.LoadPlayer(profile);
 
-        switch (level)
+        Debug.Log($"Highest level of {data.playerName} in TP GAMEMODE is: {data.profile_TP_Level}");
+        
+        if (data.stage_2_cleared)
         {
-            case 0:
-                DeActivateButton(gameObjectsList);
-                ActivateButton(gameObjectsList, 1);
-                break;
-            case 1:
-                DeActivateButton(gameObjectsList);
-                ActivateButton(gameObjectsList, 2);
-                break;
-            case 2:
-                DeActivateButton(gameObjectsList);
-                ActivateButton(gameObjectsList, 3);
-                break;
+            Debug.Log($"Enabling 3 Buttons");
+            DeActivateButton(gameObjectsList);
+            ActivateButton(gameObjectsList, 3);
+        }
+        else if (data.stage_1_cleared)
+        {
+            Debug.Log($"Enabling 2 Buttons");
+            DeActivateButton(gameObjectsList);
+            ActivateButton(gameObjectsList, 2);
+        }
+        else
+        {
+            Debug.Log($"Enabling 1 Buttons");
+            DeActivateButton(gameObjectsList);
+            ActivateButton(gameObjectsList, 1);
         }
     }
 
