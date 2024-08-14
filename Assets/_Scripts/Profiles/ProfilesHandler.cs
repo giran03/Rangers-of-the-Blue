@@ -199,13 +199,14 @@ public class ProfilesHandler : MonoBehaviour
             Debug.Log($"SAVE FILE: {player.playerName} TP: Highest Level {player.profile_TP_Level + 1}\n score lvl-1: {player.profile_TP_Level_1_Score}" +
                         $", score lvl-2: {player.profile_TP_Level_2_Score}, score lvl-3: {player.profile_TP_Level_3_Score}");
 
-            Debug.Log($"LEVEL DATA~\n [Clears]\nLevel 1: {player.stage_1_cleared}, Level 2: {player.stage_2_cleared}, Level 3: {player.stage_3_cleared}");
-
-            player.scannedSpeciesList = new();
+            Debug.Log($"SI LEVEL DATA~\n [Clears]\nLevel 1: {player.stage_1_cleared}, Level 2: {player.stage_2_cleared}, Level 3: {player.stage_3_cleared}");
+            Debug.Log($"TP LEVEL DATA~\n [Clears]\nLevel 1: {player.stage_SI_1_cleared}, Level 2: {player.stage_SI_2_cleared}, Level 3: {player.stage_SI_3_cleared}");
+            // scanned species
             Debug.Log($"Species Scanned COUNT: {player.scannedSpeciesList.Count}");
+
             foreach (Species species in player.scannedSpeciesList)
             {
-                Debug.Log($"Scanned Species is: {species}");
+                Debug.Log($"Scanned Species is: {species.speciesName}");
             }
         }
         catch (System.Exception)

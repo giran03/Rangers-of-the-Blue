@@ -37,11 +37,13 @@ public class GameSceneManager : MonoBehaviour
 
     public void PauseGame()
     {
+        Debug.Log($"⚠️ GAME PAUSED ⏸️");
         Time.timeScale = 0f;
     }
 
     public void ResumeGame()
     {
+        Debug.Log($"⚠️ GAME RESUMED ▶️");
         Time.timeScale = 1f;
     }
 }

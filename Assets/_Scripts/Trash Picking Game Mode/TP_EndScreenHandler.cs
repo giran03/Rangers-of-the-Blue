@@ -41,8 +41,6 @@ public class TP_EndScreenHandler : MonoBehaviour
     }
     public void Button_NextLevel()
     {
-        playerData = Profile.Instance.LoadPlayer(SaveSystem.SelectedProfileName);
-
         int temp = PlayerPrefs.GetInt("TP_SelectedLevel");
         if (temp < 3)
             PlayerPrefs.SetInt("TP_SelectedLevel", temp + 1);

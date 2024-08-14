@@ -26,14 +26,15 @@ public class HighestLevelChecker : MonoBehaviour
         switch (_buttonName = button.name)
         {
             case "TP Button":
-                Debug.Log($"Button of {_buttonName} is pressed!");
-                NextButton(TP_levelButtonsList);
+                NextButton("TP");
                 break;
+                
             case "SI Button":
-                Debug.Log($"Button of {_buttonName} is pressed!");
-                NextButton(SI_levelButtonsList);
+                NextButton("SI");
                 break;
         }
+
+        Debug.Log($"Button of {_buttonName} is pressed!");
     }
 
     // BUTTON | setting the selected level before playing; saved in string key "TP_SelectedLevel" in PlayerPrefs.
@@ -50,9 +51,17 @@ public class HighestLevelChecker : MonoBehaviour
             case "TP 3":
                 PlayerPrefs.SetInt("TP_SelectedLevel", 2);
                 break;
-        }
 
-        Debug.Log($"PRESSED BUTTON {_buttonName} of level {PlayerPrefs.GetInt("TP_SelectedLevel")}");
+            case "SI 1":
+                PlayerPrefs.SetInt("SI_SelectedLevel", 0);
+                break;
+            case "SI 2":
+                PlayerPrefs.SetInt("SI_SelectedLevel", 1);
+                break;
+            case "SI 3":
+                PlayerPrefs.SetInt("SI_SelectedLevel", 2);
+                break;
+        }
     }
 
     public void Button_ResetSelectedProfile()
@@ -62,31 +71,53 @@ public class HighestLevelChecker : MonoBehaviour
         LeaderboardHandler.Instance.RefreshLeaderboards();
     }
 
-    void NextButton(List<GameObject> gameObjectsList)
+    void NextButton(string selectedGamemode)
     {
         string profile = SaveSystem.SelectedProfileName;
         PlayerData data = SaveSystem.LoadPlayer(profile);
 
-        Debug.Log($"Highest level of {data.playerName} in TP GAMEMODE is: {data.profile_TP_Level}");
-        
-        if (data.stage_2_cleared)
+        switch (selectedGamemode)
         {
-            Debug.Log($"Enabling 3 Buttons");
-            DeActivateButton(gameObjectsList);
-            ActivateButton(gameObjectsList, 3);
+            case "TP":
+                CheckLevelProgress(data, selectedGamemode);
+                Debug.Log($"Highest level of {data.playerName} in TP GAMEMODE is: {data.profile_TP_Level}");
+                break;
+
+            case "SI":
+                CheckLevelProgress(data, selectedGamemode);
+                Debug.Log($"Highest level of {data.playerName} in SI GAMEMODE is: {data.profile_SI_Level}");
+                break;
         }
-        else if (data.stage_1_cleared)
+    }
+
+    void CheckLevelProgress(PlayerData data, string selectedGamemode)
+    {
+        switch (selectedGamemode)
         {
-            Debug.Log($"Enabling 2 Buttons");
-            DeActivateButton(gameObjectsList);
-            ActivateButton(gameObjectsList, 2);
+            case "TP":
+                if (data.stage_2_cleared)
+                    FlipButtons(TP_levelButtonsList, 3);
+                else if (data.stage_1_cleared)
+                    FlipButtons(TP_levelButtonsList, 2);
+                else
+                    FlipButtons(TP_levelButtonsList, 1);
+                break;
+
+            case "SI":
+                if (data.stage_SI_2_cleared)
+                    FlipButtons(SI_levelButtonsList, 3);
+                else if (data.stage_SI_1_cleared)
+                    FlipButtons(SI_levelButtonsList, 2);
+                else
+                    FlipButtons(SI_levelButtonsList, 1);
+                break;
         }
-        else
-        {
-            Debug.Log($"Enabling 1 Buttons");
-            DeActivateButton(gameObjectsList);
-            ActivateButton(gameObjectsList, 1);
-        }
+    }
+
+    void FlipButtons(List<GameObject> gameObjectsList, int count)
+    {
+        DeActivateButton(gameObjectsList);
+        ActivateButton(gameObjectsList, count);
     }
 
     void ActivateButton(List<GameObject> gameObjectList, int level)

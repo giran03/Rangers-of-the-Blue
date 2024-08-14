@@ -48,6 +48,12 @@ public static class SaveSystem
         stream.Close();
     }
 
+    public static List<Species> GetPlayerScannedSpecies()
+    {
+        PlayerData playerData = LoadPlayer(SelectedProfileName);
+        return playerData.scannedSpeciesList;
+    }
+
     public static PlayerData LoadPlayer(string searchString)
     {
         // Use Directory.EnumerateFiles to find matching files
@@ -87,14 +93,6 @@ public static class SaveSystem
             return null;
         }
     }
-
-    // public static void SaveCurrentProfile(string profile)
-    // {
-    //     // string profile = PlayerPrefs.GetString("SelectedProfile");
-    //     SavePlayer(GetProfileByName(profile));
-    //     Debug.Log($"SAVED CURRENT PROFILE FOR {profile}!");
-    // }
-
 
     public static List<PlayerData> GetPlayerData()
     {

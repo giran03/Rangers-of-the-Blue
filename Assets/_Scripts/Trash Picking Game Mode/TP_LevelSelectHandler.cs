@@ -21,18 +21,6 @@ public class TP_LevelSelectHandler : MonoBehaviour
     {
         if (!isDataLoaded) return;
 
-        // switch (PlayerPrefs.GetInt("TP_SelectedLevel"))
-        // {
-        //     case 0:
-        //         label_LVL1_Highscore.SetText($"{playerData.profile_TP_Level_1_Score}");
-        //         break;
-        //     case 1:
-        //         label_LVL2_Highscore.SetText($"{playerData.profile_TP_Level_2_Score}");
-        //         break;
-        //     case 2:
-        //         label_LVL3_Highscore.SetText($"{playerData.profile_TP_Level_3_Score}");
-        //         break;
-        // }
         label_LVL1_Highscore.SetText($"{playerData.profile_TP_Level_1_Score}");
         label_LVL2_Highscore.SetText($"{playerData.profile_TP_Level_2_Score}");
         label_LVL3_Highscore.SetText($"{playerData.profile_TP_Level_3_Score}");
@@ -52,9 +40,9 @@ public class TP_LevelSelectHandler : MonoBehaviour
 
     public void Button_LoadDataInfo()
     {
-        if (isDataLoaded) return;
+        // if (isDataLoaded) return;
 
-        // CHANGED FROM Profile's load player func ⚠️⚠️⚠️⚠️⚠️⚠️
+        // CHANGED FROM => Profile's load player func ⚠️⚠️⚠️⚠️⚠️⚠️
         playerData = SaveSystem.LoadPlayer(SaveSystem.SelectedProfileName);
         isDataLoaded = true;
     }
