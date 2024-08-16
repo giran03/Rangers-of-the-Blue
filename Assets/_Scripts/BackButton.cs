@@ -7,12 +7,6 @@ public class BackButton : MonoBehaviour
     [SerializeField]
     GameObject m_BackButton;
 
-    public GameObject backButton
-    {
-        get => m_BackButton;
-        set => m_BackButton = value;
-    }
-
     void Start()
     {
         if (Application.CanStreamedLevelBeLoaded(MenuLoader.GetMenuSceneName()))
@@ -30,6 +24,10 @@ public class BackButton : MonoBehaviour
     {
         string menuSceneName = MenuLoader.GetMenuSceneName();
         if (Application.CanStreamedLevelBeLoaded(menuSceneName))
-            SceneManager.LoadScene(menuSceneName, LoadSceneMode.Single);
+            SceneManager.LoadSceneAsync(menuSceneName, LoadSceneMode.Single);
+
+        // 🔊 change music
+        AudioManager.Instance.StopMusic();
+        AudioManager.Instance.PlayMusic("Menu BGM");
     }
 }

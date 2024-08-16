@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: c04a80d07fd4ed2498220d893cdeeac6
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - arCamera: {fileID: 2353442516230857056, guid: a50dfdfa40919f548a8d395b9a34ddd5,
+      type: 3}
+  - hud_icon_grab: {instanceID: 0}
+  - hud_icon_deposit: {instanceID: 0}
+  - hud_button_grab: {instanceID: 0}
+  - hud_label_trashPickUp: {instanceID: 0}
+  - hud_label_netBag: {instanceID: 0}
+  - hud_label_netBagFull: {instanceID: 0}
+  - hud_label_timerHasRunOut: {instanceID: 0}
+  - hud_label_timerText: {instanceID: 0}
+  - prefab_trash: {instanceID: 0}
+  - poolSpawnOrigin: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

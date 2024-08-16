@@ -1,22 +1,35 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TrashpickingGameplayManager : MonoBehaviour
 {
+    public static TrashpickingGameplayManager Instance;
+
     [Header("Configs")]
-    /// Ascending levels:
-    /// 0 - Shore,
-    /// 1 - Sand,
+    /// Game Levels:
+    /// 0 - Beach,
+    /// 1 - Shallow,
     /// 2 - Coral
     [SerializeField] GameObject[] levelCollection;
-    int selectedLevel;
+
+    void Awake()
+    {
+        if (Instance != null && Instance != this)
+            Destroy(gameObject);
+        else
+            Instance = this;
+    }
 
     private void Start()
     {
-        selectedLevel = PlayerPrefs.GetInt("SelectedLevel");
-        Debug.Log("selectedLevel: " + selectedLevel);
+        levelCollection[PlayerPrefs.GetInt("TP_SelectedLevel")].SetActive(true);
+        Debug.Log($"Player prefs level {PlayerPrefs.GetInt("TP_SelectedLevel")}");
+    }
 
-        levelCollection[selectedLevel].SetActive(true);
+    public void NextLevel(int level)
+    {
+        if (level == 0) return;
+
+        levelCollection[level - 1].SetActive(false);
+        levelCollection[level].SetActive(true);
     }
 }

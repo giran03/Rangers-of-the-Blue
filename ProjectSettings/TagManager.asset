@@ -5,6 +5,13 @@ TagManager:
   serializedVersion: 2
   tags:
   - Trash
+  - Deposit
+  - Species
+  - Trash_Low
+  - Trash_Mid
+  - Trash_High
+  - Trash_Avoid_Shell
+  - Trash_Avoid_Urchin
   layers:
   - Default
   - TransparentFX

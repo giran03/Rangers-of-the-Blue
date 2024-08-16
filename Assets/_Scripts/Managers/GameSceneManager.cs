@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.XR.ARFoundation;
 
 public class GameSceneManager : MonoBehaviour
 {
@@ -12,20 +11,17 @@ public class GameSceneManager : MonoBehaviour
         if (Instance != null && Instance != this)
             Destroy(gameObject);
         else
+        {
             Instance = this;
-
-        QualitySettings.vSyncCount = 1;
-    }
-
-    private void Start()
-    {
-        if (SceneManager.GetActiveScene().name == "Main Menu")
-            EnableCursor();
+            DontDestroyOnLoad(gameObject);
+        }
     }
 
     private void Update() => currentScene = SceneManager.GetActiveScene().name;
 
     public void GoToScene(string sceneName) => SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
+
+    public void RestartLevel() => SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 
     public void Quit()
     {
@@ -34,32 +30,20 @@ public class GameSceneManager : MonoBehaviour
 
     public void ReturnMainMenu()
     {
-        Time.timeScale = 1f;
+        GoToScene("_Menu");
     }
 
     public string CurrentScene() => currentScene;
 
     public void PauseGame()
     {
+        Debug.Log($"⚠️ GAME PAUSED ⏸️");
         Time.timeScale = 0f;
-        EnableCursor();
     }
 
     public void ResumeGame()
     {
+        Debug.Log($"⚠️ GAME RESUMED ▶️");
         Time.timeScale = 1f;
-        DisableCursor();
-    }
-
-    public void DisableCursor()
-    {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-    }
-
-    public void EnableCursor()
-    {
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
     }
 }
