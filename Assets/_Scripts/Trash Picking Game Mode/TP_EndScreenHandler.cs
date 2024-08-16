@@ -10,17 +10,25 @@ public class TP_EndScreenHandler : MonoBehaviour
     [SerializeField] TMP_Text label_levelHighscore;
     [SerializeField] TMP_Text label_currentLevel;
 
+    [Header("End Screen Tips")]
+    [SerializeField] TMP_Text textBox_randomTips;
+    [SerializeField] string[] randomTips;
+    int randomIndex;
+
     PlayerData playerData;
 
     private void Start()
     {
         playerData = Profile.Instance.LoadPlayer(SaveSystem.SelectedProfileName);
+        randomIndex = Random.Range(0, randomTips.Length);
     }
 
     private void Update()
     {
         label_currentLevel.SetText($"Level {PlayerPrefs.GetInt("TP_SelectedLevel") + 1}");
+
         label_currentScore.SetText($"Score: {PickUp_Handler.score_trashPickUp}");
+        
         if (PlayerPrefs.GetInt("TP_SelectedLevel") == 0)
             label_levelHighscore.SetText($"Highscore: {playerData.profile_TP_Level_1_Score}");
         if (PlayerPrefs.GetInt("TP_SelectedLevel") == 1)
@@ -32,6 +40,8 @@ public class TP_EndScreenHandler : MonoBehaviour
             button_next.SetActive(false);
         else
             button_next.SetActive(true);
+
+        textBox_randomTips.SetText($"{randomTips[randomIndex]}");
     }
 
     public void Button_MainMenu()

@@ -119,6 +119,9 @@ public class QuizHandler : MonoBehaviour
 
                 SI_Manager.Instance.DestroyQuiz();
                 GameSceneManager.Instance.ResumeGame();
+
+                // 🔊 SFX
+                AudioManager.Instance.PlaySFX("Correct");
             }
             else
             {
@@ -127,6 +130,9 @@ public class QuizHandler : MonoBehaviour
 
                 SI_Manager.Instance.DestroyQuiz();
                 GameSceneManager.Instance.ResumeGame();
+
+                // 🔊 SFX
+                AudioManager.Instance.PlaySFX("Wrong");
             }
         }
         else if (QuizType.ScientificName == quizType)
@@ -139,6 +145,9 @@ public class QuizHandler : MonoBehaviour
 
                 SI_Manager.Instance.DestroyQuiz();
                 GameSceneManager.Instance.ResumeGame();
+
+                // 🔊 SFX
+                AudioManager.Instance.PlaySFX("Correct");
             }
             else
             {
@@ -147,6 +156,9 @@ public class QuizHandler : MonoBehaviour
 
                 SI_Manager.Instance.DestroyQuiz();
                 GameSceneManager.Instance.ResumeGame();
+
+                // 🔊 SFX
+                AudioManager.Instance.PlaySFX("Wrong");
             }
         }
         else if (QuizType.Conservation == quizType)
@@ -159,6 +171,9 @@ public class QuizHandler : MonoBehaviour
 
                 SI_Manager.Instance.DestroyQuiz();
                 GameSceneManager.Instance.ResumeGame();
+
+                // 🔊 SFX
+                AudioManager.Instance.PlaySFX("Correct");
             }
             else
             {
@@ -167,6 +182,9 @@ public class QuizHandler : MonoBehaviour
 
                 SI_Manager.Instance.DestroyQuiz();
                 GameSceneManager.Instance.ResumeGame();
+
+                // 🔊 SFX
+                AudioManager.Instance.PlaySFX("Wrong");
             }
         }
 

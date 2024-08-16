@@ -3,7 +3,6 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.UIElements;
 
 public class IndexHandler : MonoBehaviour
 {
@@ -50,30 +49,8 @@ public class IndexHandler : MonoBehaviour
         lastSaved_EntryTransformList = speciesEntryTransformList;
 
         Debug.Log($"Refreshed index screen!");
-    }
 
-    public void AddSpeciesEntry(Species species)
-    {
-        // create species entry
-        SpeciesEntry speciesEntry = new()
-        {
-            speciesName = species.speciesName,
-            scientificName = species.scientificName,
-            conservationStatus = species.conservationStatus,
-            kingdom = species.kingdom
-        };
-
-        // load saved species
-        string jsonString = PlayerPrefs.GetString("speciesIndexTable");
-        SpeciesScanned speciesScanned = JsonUtility.FromJson<SpeciesScanned>(jsonString);
-
-        // add entry to species
-        speciesScanned.speciesEntriesList.Add(speciesEntry);
-
-        // save and update species
-        string json = JsonUtility.ToJson(speciesScanned);
-        PlayerPrefs.SetString("speciesIndexTable", json);
-        PlayerPrefs.Save();
+        GameSceneManager.Instance.PauseGame();
     }
 
     private void CreateSpeciesEntryTransform(Species data, Transform container, List<Transform> transformList)
@@ -83,15 +60,25 @@ public class IndexHandler : MonoBehaviour
         entryRectTransform.anchoredPosition = new Vector2(0f, -templateHeight) * transformList.Count;
         entryTransform.gameObject.SetActive(true);
 
-        entryTransform.Find("SpeciesImage").GetComponent<UnityEngine.UI.Image>().sprite = GetSpeciesImage(data.speciesName);
-        entryTransform.Find("Name").GetComponent<TextMeshProUGUI>().SetText($"Species Name: {data.speciesName}");
-        entryTransform.Find("ScientificName").GetComponent<TextMeshProUGUI>().SetText($"Scientific Name: {data.scientificName}");
-        entryTransform.Find("ConservationStatus").GetComponent<TextMeshProUGUI>().SetText($"Conservation Status: {data.conservationStatus}");
-        entryTransform.Find("Kingdom").GetComponent<TextMeshProUGUI>().SetText($"Kingdom: {data.kingdom}");
+        // ADD BUTTON LISTENER
+        Button entryButton = entryTransform.GetComponent<Button>();
+        entryButton.onClick.RemoveListener(() => Add_Button_SFX(data.speciesName));
+        entryButton.onClick.AddListener(() => Add_Button_SFX(data.speciesName));
+
+        entryTransform.Find("SpeciesImage").GetComponent<Image>().sprite = GetSpeciesImage(data.speciesName);
+        entryTransform.Find("Name").GetComponent<TextMeshProUGUI>().SetText($"{data.speciesName}");
+        entryTransform.Find("ScientificName").GetComponent<TextMeshProUGUI>().SetText($"{data.scientificName}");
+        entryTransform.Find("ConservationStatus").GetComponent<TextMeshProUGUI>().SetText($"{data.conservationStatus}");
+        entryTransform.Find("Family").GetComponent<TextMeshProUGUI>().SetText($"{data.kingdom}");
 
         entryTransform.Find("Background").gameObject.SetActive(transformList.Count % 2 == 1); // Assuming even/odd row background logic
 
         transformList.Add(entryTransform);
+    }
+
+    void Add_Button_SFX(string buttonSpecies)
+    {
+        AudioManager.Instance.PlaySFX(buttonSpecies);
     }
 
     public Sprite GetSpeciesImage(string speciesNameToFind)
@@ -99,19 +86,5 @@ public class IndexHandler : MonoBehaviour
         var speciesIndex = SI_Manager.Instance.speciesIndex_Array.FirstOrDefault(si => si.speciesIndexName == speciesNameToFind);
 
         return speciesIndex?.speciesImg; // null propagation
-    }
-
-    private class SpeciesScanned
-    {
-        public List<SpeciesEntry> speciesEntriesList;
-    }
-
-    [System.Serializable]
-    private class SpeciesEntry
-    {
-        public string speciesName;
-        public string scientificName;
-        public string conservationStatus;
-        public string kingdom;
     }
 }

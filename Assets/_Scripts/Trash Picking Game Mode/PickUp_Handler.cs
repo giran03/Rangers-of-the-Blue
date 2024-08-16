@@ -72,6 +72,7 @@ public class PickUp_Handler : MonoBehaviour
 
         profile = SaveSystem.SelectedProfileName;
         data = Profile.Instance.LoadPlayer(profile);
+        // data = SaveSystem.LoadPlayer("Inannis");
         Debug.Log($"HIGHEST LEVEL OF PLAYER {data.playerName} is {data.profile_TP_Level} !!!");
     }
 
@@ -83,6 +84,10 @@ public class PickUp_Handler : MonoBehaviour
         netBag_currentCapacity = 0;
 
         display_EndScreen.SetActive(false);
+
+        // 🔊 change music
+        AudioManager.Instance.StopMusic();
+        AudioManager.Instance.PlayMusic("Game BGM");
     }
 
     void Update()
@@ -235,12 +240,24 @@ public class PickUp_Handler : MonoBehaviour
 
                 Destroy(trashObject);
                 OnObjectDestroyed(trashObject); // respawns object
+
+                // 🔊 SFX
+                AudioManager.Instance.PlaySFX("Trash PickUp");
+
+                // 🔊 SFX
+                if (lastCollected_Trash.Contains("Avoid"))
+                    AudioManager.Instance.PlaySFX("Wrong");
+                else
+                    AudioManager.Instance.PlaySFX("Correct");
             }
             else
             {
                 Debug.Log("The net bag is full!!!\nDeposit trash first");
                 if (!isBagFullText)
                     StartCoroutine(NetBagFull());
+
+                // 🔊 SFX
+                AudioManager.Instance.PlaySFX("Notification Full");
             }
         }
     }
@@ -268,6 +285,9 @@ public class PickUp_Handler : MonoBehaviour
     {
         yield return new WaitForSeconds(1.2f);
         display_EndScreen.SetActive(true);
+
+        // 🔊 SFX
+        AudioManager.Instance.PlaySFX("Score Up");
     }
 
     public void DepositButton()
@@ -284,6 +304,9 @@ public class PickUp_Handler : MonoBehaviour
         currentScore = 0;
 
         netBag_currentCapacity = 0;
+
+        // 🔊 SFX
+        AudioManager.Instance.PlaySFX("Trash Dump");
     }
 
     void DisplayTime(float timeToDisplay)

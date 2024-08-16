@@ -11,11 +11,17 @@ public class SI_EndScreenHandler : MonoBehaviour
     [SerializeField] TMP_Text label_levelHighscore;
     [SerializeField] TMP_Text label_currentLevel;
 
+    [Header("End Screen Tips")]
+    [SerializeField] TMP_Text textBox_randomTips;
+    [SerializeField] string[] randomTips;
+    int randomIndex;
+
     PlayerData playerData;
 
     private void Start()
     {
         playerData = Profile.Instance.LoadPlayer(SaveSystem.SelectedProfileName);
+        randomIndex = Random.Range(0, randomTips.Length);
     }
 
     private void Update()
@@ -33,6 +39,8 @@ public class SI_EndScreenHandler : MonoBehaviour
             button_next.SetActive(false);
         else
             button_next.SetActive(true);
+
+        textBox_randomTips.SetText($"{randomTips[randomIndex]}");
     }
 
     public void Button_MainMenu()

@@ -47,25 +47,6 @@ public class LeaderboardHandler : MonoBehaviour
             CreateHighscoreEntryTransform(data, entryContainer, highscoreEntryTransformList);
     }
 
-    public void AddHighscoreEntry(string profileName, int TP_Highscore, int SI_highscore)
-    {
-        // create highscore entry
-        HighscoreEntry highscoreEntry = new()
-        { profileName = profileName, TP_highscore = TP_Highscore, SI_highscore = SI_highscore };
-
-        // load saved highscores
-        string jsonString = PlayerPrefs.GetString("highscoreTable");
-        Highscores highscores = JsonUtility.FromJson<Highscores>(jsonString);
-
-        // add entry to highscores
-        highscores.highscoreEntryList.Add(highscoreEntry);
-
-        // save and update highscores
-        string json = JsonUtility.ToJson(highscores);
-        PlayerPrefs.SetString("highscoreTable", json);
-        PlayerPrefs.Save();
-    }
-
     private void CreateHighscoreEntryTransform(PlayerData data, Transform container, List<Transform> transformList)
     {
         Transform entryTransform = Instantiate(entryTemplate, container);
@@ -80,18 +61,5 @@ public class LeaderboardHandler : MonoBehaviour
         entryTransform.Find("Background").gameObject.SetActive(transformList.Count % 2 == 1); // Assuming even/odd row background logic
 
         transformList.Add(entryTransform);
-    }
-
-    private class Highscores
-    {
-        public List<HighscoreEntry> highscoreEntryList;
-    }
-
-    [System.Serializable]
-    private class HighscoreEntry
-    {
-        public string profileName;
-        public int TP_highscore;
-        public int SI_highscore;
     }
 }

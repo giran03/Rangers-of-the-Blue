@@ -126,7 +126,7 @@ MonoBehaviour:
   Data:
     Duration: 0.2
     Target: {fileID: 6893237598704541763}
-    Value: {r: 0.03373701, g: 0.46191987, b: 0.7647059, a: 1}
+    Value: {r: 1, g: 1, b: 1, a: 1}
     Ease: 250
 --- !u!114 &8368570237963173696
 MonoBehaviour:
@@ -326,13 +326,19 @@ MonoBehaviour:
     roots: []
     aliases: []
     targets: []
-    entries: []
+    entries:
+    - root: {fileID: 0}
+      speed: -1
+      aliases: []
   nonInteractableTransitions:
     speed: -1
     roots: []
     aliases: []
     targets: []
-    entries: []
+    entries:
+    - root: {fileID: 0}
+      speed: -1
+      aliases: []
   onInteractable:
     m_PersistentCalls:
       m_Calls: []
@@ -542,7 +548,7 @@ MonoBehaviour:
   Data:
     Duration: 0.1
     Target: {fileID: 6893237598704541763}
-    Value: {r: 0.03137255, g: 0.5803922, b: 0.96862745, a: 1}
+    Value: {r: 1, g: 1, b: 1, a: 1}
     Ease: 250
 --- !u!114 &2477763437516604982
 MonoBehaviour:

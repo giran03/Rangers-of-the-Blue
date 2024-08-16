@@ -28,7 +28,7 @@ public class HighestLevelChecker : MonoBehaviour
             case "TP Button":
                 NextButton("TP");
                 break;
-                
+
             case "SI Button":
                 NextButton("SI");
                 break;
@@ -37,7 +37,7 @@ public class HighestLevelChecker : MonoBehaviour
         Debug.Log($"Button of {_buttonName} is pressed!");
     }
 
-    // BUTTON | setting the selected level before playing; saved in string key "TP_SelectedLevel" in PlayerPrefs.
+    // BUTTON | setting the selected level before playing;
     public void Button_LevelButtonPress(string buttonLevel)
     {
         switch (buttonLevel)
@@ -68,7 +68,9 @@ public class HighestLevelChecker : MonoBehaviour
     {
         if (SaveSystem.SelectedProfileName != null)
             SaveSystem.SelectedProfileName = null;
-        LeaderboardHandler.Instance.RefreshLeaderboards();
+        
+        if (LeaderboardHandler.Instance != null)
+            LeaderboardHandler.Instance.RefreshLeaderboards();
     }
 
     void NextButton(string selectedGamemode)

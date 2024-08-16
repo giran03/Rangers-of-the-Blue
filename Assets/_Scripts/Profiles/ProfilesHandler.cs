@@ -7,12 +7,13 @@ using UnityEngine.UI;
 
 public class ProfilesHandler : MonoBehaviour
 {
+    public static ProfilesHandler Instance;
     [SerializeField] InputField inputField_name;
     [SerializeField] InputField inputField_age;
     [SerializeField] Dropdown dropdown_Profiles;
     string _name;
     int _age;
-    string selectedProfile;
+    public string selectedProfile;
     bool isCreatingProfile = true;
 
     [Header("Button Configs")]
@@ -23,6 +24,7 @@ public class ProfilesHandler : MonoBehaviour
 
     [Header("Configs")]
     [SerializeField] TMP_Text label_profileName;
+    [SerializeField] GameObject lockedButton;
 
     private void Awake()
     {
@@ -132,8 +134,12 @@ public class ProfilesHandler : MonoBehaviour
     public void Button_SelectThisProfile()
     {
         SaveSystem.SelectedProfileName = selectedProfile;
-        SaveSystem.LoadPlayer(SaveSystem.SelectedProfileName);
-        label_profileName.SetText($"GOODLUCK {SaveSystem.SelectedProfileName}");
+        PlayerData playerData = SaveSystem.LoadPlayer(SaveSystem.SelectedProfileName);
+        label_profileName.SetText($"GOODLUCK {playerData.playerName}!");
+        if (playerData.stage_3_cleared)
+            lockedButton.SetActive(false);
+
+        ReloadObjects.ProfileToCheck = playerData;
     }
 
     public static List<string> GetPlayerFileNamesWithoutExtension()

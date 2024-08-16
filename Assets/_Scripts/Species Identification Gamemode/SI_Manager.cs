@@ -134,6 +134,10 @@ public class SI_Manager : MonoBehaviour
         {
             GrowPool();
         }
+
+        // 🔊 change music
+        AudioManager.Instance.StopMusic();
+        AudioManager.Instance.PlayMusic("Game BGM");
     }
 
     void Update()
@@ -200,7 +204,7 @@ public class SI_Manager : MonoBehaviour
                 {
                     CheckScanned(speciesObj);
 
-                    if (speciesObj.scanned) // if species is already scanned~
+                    if (speciesObj.scanned) // if species is already scanned -> initiate QUIZ
                     {
                         Debug.Log($"This species is already scanned!\n~Initiating Quiz!");
                         button_scanButton.SetActive(false);
@@ -223,12 +227,16 @@ public class SI_Manager : MonoBehaviour
 
                         // disable index button
                         button_index.SetActive(false);
+
+                        // 🔊 SFX
+                        AudioManager.Instance.PlaySFX("Information Ping");
                     }
                     else
                     {
                         dispaly_scanInfoBox.SetActive(true);
                         button_scanButton.SetActive(false);
                         DestroyQuiz();
+
                         GetSpeciesInfo(speciesObj.speciesName);
                         StartCoroutine(SetScanned(speciesObj));
 
@@ -291,7 +299,11 @@ public class SI_Manager : MonoBehaviour
             DisplaySpeciesInfo();
 
             if (!ScannedSpeciesCollection.Any(x => x.speciesName == currentSpecies.speciesName))
+            {
                 ScannedSpeciesCollection.Add(currentSpecies);
+                // play species SFX
+                AudioManager.Instance.PlaySFX(currentSpecies.speciesName);
+            }
             else
                 Debug.Log($"Species is already in the collection!");
         }
@@ -388,6 +400,9 @@ public class SI_Manager : MonoBehaviour
     {
         yield return new WaitForSeconds(1.2f);
         display_EndScreen.SetActive(true);
+
+        // 🔊 SFX
+        AudioManager.Instance.PlaySFX("Score Up");
     }
 
     /// <summary>

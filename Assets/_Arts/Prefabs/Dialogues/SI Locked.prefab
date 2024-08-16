@@ -25,9 +25,29 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4277242970905247593, guid: 08cf5f95d1bbb2c45ac76c0a65e2f63c,
         type: 3}
+      propertyPath: checkStageCleared
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4277242970905247593, guid: 08cf5f95d1bbb2c45ac76c0a65e2f63c,
+        type: 3}
       propertyPath: dialogues.Array.size
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 4277242970905247593, guid: 08cf5f95d1bbb2c45ac76c0a65e2f63c,
+        type: 3}
+      propertyPath: dialogueSFX.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4277242970905247593, guid: 08cf5f95d1bbb2c45ac76c0a65e2f63c,
+        type: 3}
+      propertyPath: dialogueSFX.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 9dcca2544d1ff1748a8408f7217b8d9c, type: 3}
+    - target: {fileID: 4277242970905247593, guid: 08cf5f95d1bbb2c45ac76c0a65e2f63c,
+        type: 3}
+      propertyPath: dialogueSFX.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: 487af1f942919c849af8aa00bbad9c88, type: 3}
     - target: {fileID: 4277242970905247593, guid: 08cf5f95d1bbb2c45ac76c0a65e2f63c,
         type: 3}
       propertyPath: dialogues.Array.data[0].text

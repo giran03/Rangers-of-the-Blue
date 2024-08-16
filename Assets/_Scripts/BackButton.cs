@@ -7,12 +7,6 @@ public class BackButton : MonoBehaviour
     [SerializeField]
     GameObject m_BackButton;
 
-    public GameObject backButton
-    {
-        get => m_BackButton;
-        set => m_BackButton = value;
-    }
-
     void Start()
     {
         if (Application.CanStreamedLevelBeLoaded(MenuLoader.GetMenuSceneName()))
@@ -28,12 +22,12 @@ public class BackButton : MonoBehaviour
 
     public void BackButtonPressed()
     {
-        // save the current selected profile
-        // TODO: FIX ME
-        // SaveSystem.SaveCurrentProfile(PlayerPrefs.GetString("SelectedProfile"));
-
         string menuSceneName = MenuLoader.GetMenuSceneName();
         if (Application.CanStreamedLevelBeLoaded(menuSceneName))
             SceneManager.LoadSceneAsync(menuSceneName, LoadSceneMode.Single);
+
+        // 🔊 change music
+        AudioManager.Instance.StopMusic();
+        AudioManager.Instance.PlayMusic("Menu BGM");
     }
 }
