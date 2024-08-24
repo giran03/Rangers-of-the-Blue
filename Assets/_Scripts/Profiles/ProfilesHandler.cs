@@ -25,6 +25,7 @@ public class ProfilesHandler : MonoBehaviour
     [Header("Configs")]
     [SerializeField] TMP_Text label_profileName;
     [SerializeField] GameObject lockedButton;
+    [SerializeField] GameObject dialogue_SI_Unlocked;
 
     private void Awake()
     {
@@ -36,6 +37,8 @@ public class ProfilesHandler : MonoBehaviour
     {
         UpdateOptions();
         Debug.Log($"Selected profile from memory is: {SaveSystem.SelectedProfileName}");
+        
+        dialogue_SI_Unlocked.SetActive(false);
     }
 
     private void Update()
@@ -137,7 +140,10 @@ public class ProfilesHandler : MonoBehaviour
         PlayerData playerData = SaveSystem.LoadPlayer(SaveSystem.SelectedProfileName);
         label_profileName.SetText($"GOODLUCK {playerData.playerName}!");
         if (playerData.stage_3_cleared)
+        {
             lockedButton.SetActive(false);
+            dialogue_SI_Unlocked.SetActive(true);
+        }
 
         ReloadObjects.ProfileToCheck = playerData;
     }

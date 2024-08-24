@@ -10,6 +10,7 @@ public class Dialogue
 
 public class DialogueHandler : MonoBehaviour
 {
+    [SerializeField] GameObject nextDialogue = null;
     [SerializeField] TMP_Text dialogueText;
     [SerializeField] Button continueButton;
 
@@ -39,9 +40,7 @@ public class DialogueHandler : MonoBehaviour
         currentDialogueIndex = 0;
 
         if (!CheckPlayerLevel())
-        {
             StartDialogue();
-        }
         else
             DisableDialogue();
     }
@@ -88,6 +87,9 @@ public class DialogueHandler : MonoBehaviour
         else
             gameObject.SetActive(false);
 
+        if (nextDialogue != null)
+            nextDialogue.SetActive(true);
+
         isPaused = false;
         GameSceneManager.Instance.ResumeGame();
     }
@@ -95,13 +97,17 @@ public class DialogueHandler : MonoBehaviour
     bool CheckPlayerLevel()
     {
         if (!checkStageCleared)
+        {
             return false;
-
-        PlayerData data = SaveSystem.LoadPlayer(SaveSystem.SelectedProfileName);
-
-        if (is_TP_Level)
-            return data.stage_1_cleared;
+        }
         else
-            return data.stage_SI_1_cleared;
+        {
+            PlayerData data = SaveSystem.LoadPlayer(SaveSystem.SelectedProfileName);
+
+            if (is_TP_Level)
+                return data.stage_1_cleared;
+            else
+                return data.stage_SI_1_cleared;
+        }
     }
 }

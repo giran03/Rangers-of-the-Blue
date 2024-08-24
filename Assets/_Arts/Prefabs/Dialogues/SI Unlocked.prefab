@@ -1,0 +1,107 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &3989200405000989123
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 303036593880434509, guid: 08cf5f95d1bbb2c45ac76c0a65e2f63c,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 303036593880434509, guid: 08cf5f95d1bbb2c45ac76c0a65e2f63c,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 303036593880434509, guid: 08cf5f95d1bbb2c45ac76c0a65e2f63c,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 303036593880434509, guid: 08cf5f95d1bbb2c45ac76c0a65e2f63c,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 303036593880434509, guid: 08cf5f95d1bbb2c45ac76c0a65e2f63c,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 303036593880434509, guid: 08cf5f95d1bbb2c45ac76c0a65e2f63c,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 303036593880434509, guid: 08cf5f95d1bbb2c45ac76c0a65e2f63c,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 303036593880434509, guid: 08cf5f95d1bbb2c45ac76c0a65e2f63c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 303036593880434509, guid: 08cf5f95d1bbb2c45ac76c0a65e2f63c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 303036593880434509, guid: 08cf5f95d1bbb2c45ac76c0a65e2f63c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4277242970905247593, guid: 08cf5f95d1bbb2c45ac76c0a65e2f63c,
+        type: 3}
+      propertyPath: dialogues.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4277242970905247593, guid: 08cf5f95d1bbb2c45ac76c0a65e2f63c,
+        type: 3}
+      propertyPath: dialogues.Array.data[0].text
+      value: Well done recruit!
+      objectReference: {fileID: 0}
+    - target: {fileID: 4277242970905247593, guid: 08cf5f95d1bbb2c45ac76c0a65e2f63c,
+        type: 3}
+      propertyPath: dialogues.Array.data[1].text
+      value: You have managed to clean the ocean from trash that has been keeping
+        it dirty.
+      objectReference: {fileID: 0}
+    - target: {fileID: 4277242970905247593, guid: 08cf5f95d1bbb2c45ac76c0a65e2f63c,
+        type: 3}
+      propertyPath: dialogues.Array.data[2].text
+      value: And for that, Thank you!
+      objectReference: {fileID: 0}
+    - target: {fileID: 4277242970905247593, guid: 08cf5f95d1bbb2c45ac76c0a65e2f63c,
+        type: 3}
+      propertyPath: dialogues.Array.data[3].text
+      value: Now that the trash has been cleared out...
+      objectReference: {fileID: 0}
+    - target: {fileID: 4277242970905247593, guid: 08cf5f95d1bbb2c45ac76c0a65e2f63c,
+        type: 3}
+      propertyPath: dialogues.Array.data[4].text
+      value: reports have been saying that endangered marine species have been spotted
+        to return to their habitats...
+      objectReference: {fileID: 0}
+    - target: {fileID: 8310130117002422995, guid: 08cf5f95d1bbb2c45ac76c0a65e2f63c,
+        type: 3}
+      propertyPath: m_Name
+      value: Dialogue Box Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 8310130117002422995, guid: 08cf5f95d1bbb2c45ac76c0a65e2f63c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 08cf5f95d1bbb2c45ac76c0a65e2f63c, type: 3}

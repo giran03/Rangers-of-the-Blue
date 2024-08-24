@@ -1,0 +1,141 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &1938801974325831614
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 303036593880434509, guid: 08cf5f95d1bbb2c45ac76c0a65e2f63c,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 303036593880434509, guid: 08cf5f95d1bbb2c45ac76c0a65e2f63c,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 303036593880434509, guid: 08cf5f95d1bbb2c45ac76c0a65e2f63c,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 303036593880434509, guid: 08cf5f95d1bbb2c45ac76c0a65e2f63c,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 303036593880434509, guid: 08cf5f95d1bbb2c45ac76c0a65e2f63c,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 303036593880434509, guid: 08cf5f95d1bbb2c45ac76c0a65e2f63c,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 303036593880434509, guid: 08cf5f95d1bbb2c45ac76c0a65e2f63c,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 303036593880434509, guid: 08cf5f95d1bbb2c45ac76c0a65e2f63c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 303036593880434509, guid: 08cf5f95d1bbb2c45ac76c0a65e2f63c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 303036593880434509, guid: 08cf5f95d1bbb2c45ac76c0a65e2f63c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3185501442642229078, guid: 08cf5f95d1bbb2c45ac76c0a65e2f63c,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 3773c6ef91926e245a3a7283b7061fee,
+        type: 3}
+    - target: {fileID: 4277242970905247593, guid: 08cf5f95d1bbb2c45ac76c0a65e2f63c,
+        type: 3}
+      propertyPath: isSpawnable
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4277242970905247593, guid: 08cf5f95d1bbb2c45ac76c0a65e2f63c,
+        type: 3}
+      propertyPath: is_TP_Level
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4277242970905247593, guid: 08cf5f95d1bbb2c45ac76c0a65e2f63c,
+        type: 3}
+      propertyPath: checkStageCleared
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4277242970905247593, guid: 08cf5f95d1bbb2c45ac76c0a65e2f63c,
+        type: 3}
+      propertyPath: dialogues.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4277242970905247593, guid: 08cf5f95d1bbb2c45ac76c0a65e2f63c,
+        type: 3}
+      propertyPath: dialogueSFX.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4277242970905247593, guid: 08cf5f95d1bbb2c45ac76c0a65e2f63c,
+        type: 3}
+      propertyPath: dialogueSFX.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: e6ccb23b32223b44eaafea947bcab586, type: 3}
+    - target: {fileID: 4277242970905247593, guid: 08cf5f95d1bbb2c45ac76c0a65e2f63c,
+        type: 3}
+      propertyPath: dialogueSFX.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: 358d6b91c44645b45b46addda95cb9d6, type: 3}
+    - target: {fileID: 4277242970905247593, guid: 08cf5f95d1bbb2c45ac76c0a65e2f63c,
+        type: 3}
+      propertyPath: dialogueSFX.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: be4d67d1e51d811469e51efb4c43879a, type: 3}
+    - target: {fileID: 4277242970905247593, guid: 08cf5f95d1bbb2c45ac76c0a65e2f63c,
+        type: 3}
+      propertyPath: dialogues.Array.data[0].text
+      value: The species population is still decreasing!
+      objectReference: {fileID: 0}
+    - target: {fileID: 4277242970905247593, guid: 08cf5f95d1bbb2c45ac76c0a65e2f63c,
+        type: 3}
+      propertyPath: dialogues.Array.data[1].text
+      value: The Turtles are eating plastics!
+      objectReference: {fileID: 0}
+    - target: {fileID: 4277242970905247593, guid: 08cf5f95d1bbb2c45ac76c0a65e2f63c,
+        type: 3}
+      propertyPath: dialogues.Array.data[2].text
+      value: You can do this ranger!
+      objectReference: {fileID: 0}
+    - target: {fileID: 4277242970905247593, guid: 08cf5f95d1bbb2c45ac76c0a65e2f63c,
+        type: 3}
+      propertyPath: dialogues.Array.data[3].text
+      value: Their homes are being polluted by many plastics!
+      objectReference: {fileID: 0}
+    - target: {fileID: 8310130117002422995, guid: 08cf5f95d1bbb2c45ac76c0a65e2f63c,
+        type: 3}
+      propertyPath: m_Name
+      value: SI Gamemode Level 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8310130117002422995, guid: 08cf5f95d1bbb2c45ac76c0a65e2f63c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 08cf5f95d1bbb2c45ac76c0a65e2f63c, type: 3}

@@ -22,12 +22,12 @@ public class BackButton : MonoBehaviour
 
     public void BackButtonPressed()
     {
-        string menuSceneName = MenuLoader.GetMenuSceneName();
-        if (Application.CanStreamedLevelBeLoaded(menuSceneName))
-            SceneManager.LoadSceneAsync(menuSceneName, LoadSceneMode.Single);
-
         // 🔊 change music
         AudioManager.Instance.StopMusic();
         AudioManager.Instance.PlayMusic("Menu BGM");
+        
+        string menuSceneName = MenuLoader.GetMenuSceneName();
+        if (Application.CanStreamedLevelBeLoaded(menuSceneName))
+            SceneManager.LoadSceneAsync(menuSceneName, LoadSceneMode.Single);
     }
 }

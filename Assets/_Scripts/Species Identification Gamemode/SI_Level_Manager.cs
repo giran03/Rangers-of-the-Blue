@@ -10,6 +10,7 @@ public class SI_Level_Manager : MonoBehaviour
     /// 1
     /// 2
     [SerializeField] int[] levelTimers;
+    [SerializeField] GameObject[] startDialogues;
     int selectedLevel;
 
     public int currentSelectedLevel;
@@ -25,13 +26,18 @@ public class SI_Level_Manager : MonoBehaviour
     private void Start()
     {
         selectedLevel = PlayerPrefs.GetInt("SI_SelectedLevel");
-        Debug.Log("selected SI Level is: " + selectedLevel);
         currentSelectedLevel = selectedLevel;
+
+        foreach (GameObject gameObject in startDialogues)
+            gameObject.SetActive(false);
+
+        // skip level 1
+        if (currentSelectedLevel != 0)
+            startDialogues[currentSelectedLevel].SetActive(true);
     }
 
     public int GetLevelTimer()
     {
-        Debug.Log($"RETURNING timer for level {selectedLevel}");
         return levelTimers[selectedLevel];
     }
 
