@@ -83,4 +83,12 @@ public class TrashScanHandler : MonoBehaviour
         // 🔊 SFX
         AudioManager.Instance.PlaySFX("Information Ping");
     }
+
+    public void Button_CloseScanWindow()
+    {
+        isScanning = false;
+
+        information_popup_window.SetActive(false);
+        GameSceneManager.Instance.ResumeGame();
+    }
 }

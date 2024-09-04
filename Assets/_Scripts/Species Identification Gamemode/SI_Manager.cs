@@ -3,10 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 [Serializable]
 public class Species
@@ -93,12 +90,6 @@ public class SI_Manager : MonoBehaviour
         else
             Instance = this;
 
-        //TODO: REMOVE DEFAULT CALLS
-        // PlayerPrefs.SetInt("SI_SelectedLevel", 0);
-        // profile = SaveSystem.SelectedProfileName = "gigi";
-        // playerData = SaveSystem.LoadPlayer(profile);
-
-
         profile = SaveSystem.SelectedProfileName;
         playerData = Profile.Instance.LoadPlayer(profile);
 
@@ -110,7 +101,7 @@ public class SI_Manager : MonoBehaviour
 
     private void Start()
     {
-        dispaly_scanInfoBox.SetActive(false);
+        DisplayInfoBox();
         timerIsRunning = true;
         score_scanedSpecies = 0;
 
@@ -168,7 +159,7 @@ public class SI_Manager : MonoBehaviour
         }
         else
         {
-            dispaly_scanInfoBox.SetActive(false);
+            DisplayInfoBox();
             button_scanButton.SetActive(true);
             button_index.SetActive(true);
             currentSpecies_Obect = null;
@@ -233,7 +224,7 @@ public class SI_Manager : MonoBehaviour
                     }
                     else
                     {
-                        dispaly_scanInfoBox.SetActive(true);
+                        DisplayInfoBox(true);
                         button_scanButton.SetActive(false);
                         DestroyQuiz();
 
@@ -250,6 +241,21 @@ public class SI_Manager : MonoBehaviour
             else
                 currentSpecies_Obect = null;
         }
+    }
+
+/// <summary>
+/// Display Information about the species
+/// </summary>
+    void DisplayInfoBox(bool condition = false)
+    {
+        dispaly_scanInfoBox.SetActive(condition);
+    }
+
+    public void Button_CloseInformation_PopUp()
+    {
+        DisplayInfoBox(false);
+        isScanning = false;
+        GameSceneManager.Instance.ResumeGame();
     }
 
     /// <summary>

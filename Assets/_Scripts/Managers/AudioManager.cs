@@ -35,11 +35,11 @@ public class AudioManager : MonoBehaviour
     {
         if(GameSceneManager.Instance.CurrentScene() == "_Menu")
         {
-            currentMusic.volume = .5f;
+            currentMusic.volume = .3f;
         }
         else
         {
-            currentMusic.volume = .5f;
+            currentMusic.volume = .3f;
         }
     }
 

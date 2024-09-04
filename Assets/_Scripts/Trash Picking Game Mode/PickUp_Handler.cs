@@ -9,6 +9,7 @@ public class PickUp_Handler : MonoBehaviour
     [SerializeField] Camera arCamera;
 
     [Header("Configs")]
+    [SerializeField] GameObject hud_icon_reticle;
     [SerializeField] GameObject hud_icon_grab;
     [SerializeField] GameObject hud_icon_deposit;
     [SerializeField] GameObject hud_button_grab;
@@ -199,6 +200,8 @@ public class PickUp_Handler : MonoBehaviour
             {
                 hud_icon_grab.SetActive(true);
                 hud_button_grab.SetActive(true);
+
+                hud_icon_reticle.SetActive(false);
             }
             if (hit.collider.CompareTag("Deposit"))
             {
@@ -213,6 +216,8 @@ public class PickUp_Handler : MonoBehaviour
             hud_icon_deposit.SetActive(false);
             hud_icon_grab.SetActive(false);
             hud_button_grab.SetActive(false);
+
+            hud_icon_reticle.SetActive(true);
         }
 
         // sets score and level
