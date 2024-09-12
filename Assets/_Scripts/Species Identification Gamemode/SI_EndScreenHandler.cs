@@ -7,6 +7,7 @@ public class SI_EndScreenHandler : MonoBehaviour
 {
     [Header("Configs")]
     [SerializeField] GameObject button_next;
+    [SerializeField] GameObject button_finishLevel;
     [SerializeField] TMP_Text label_currentScore;
     [SerializeField] TMP_Text label_levelHighscore;
     [SerializeField] TMP_Text label_currentLevel;
@@ -22,6 +23,7 @@ public class SI_EndScreenHandler : MonoBehaviour
     {
         playerData = Profile.Instance.LoadPlayer(SaveSystem.SelectedProfileName);
         randomIndex = Random.Range(0, randomTips.Length);
+        button_finishLevel.SetActive(false);
     }
 
     private void Update()
@@ -36,7 +38,10 @@ public class SI_EndScreenHandler : MonoBehaviour
             label_levelHighscore.SetText($"Highscore: {playerData.profile_SI_Level_3_Score}");
 
         if (PlayerPrefs.GetInt("SI_SelectedLevel") == 2)
+        {
             button_next.SetActive(false);
+            button_finishLevel.SetActive(true);
+        }
         else
             button_next.SetActive(true);
 
@@ -63,5 +68,11 @@ public class SI_EndScreenHandler : MonoBehaviour
     public void Button_ReplayLevel()
     {
         GameSceneManager.Instance.RestartLevel();
+    }
+
+    public void Button_FinishLevel()
+    {
+        PlayerPrefs.SetString("currentPlayer", playerData.playerName);
+        GameSceneManager.Instance.FinishLevel();
     }
 }

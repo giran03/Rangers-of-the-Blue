@@ -5,6 +5,8 @@ public class GameSceneManager : MonoBehaviour
 {
     public static GameSceneManager Instance;
     string currentScene;
+    float defaultVolume_music;
+    float defaultVolume_sfx;
 
     private void Awake()
     {
@@ -33,6 +35,14 @@ public class GameSceneManager : MonoBehaviour
         GoToScene("_Menu");
     }
 
+    public void FinishLevel()
+    {
+
+        Debug.Log($"⚠️ Returning to gamemode select screen!");
+        PlayerPrefs.SetString("gameFinished", "true");
+        GoToScene("_Menu");
+    }
+
     public string CurrentScene() => currentScene;
 
     public void PauseGame()
@@ -46,4 +56,19 @@ public class GameSceneManager : MonoBehaviour
         Debug.Log($"⚠️ GAME RESUMED ▶️");
         Time.timeScale = 1f;
     }
+
+    public void MuteGame()
+    {
+        defaultVolume_music = AudioManager.Instance.currentMusic.volume;
+        AudioManager.Instance.currentMusic.volume = 0f;
+    }
+
+    public void UnMuteGame()
+    {
+        AudioManager.Instance.currentMusic.volume = defaultVolume_music;
+    }
+    public void Toggle_MUSIC() => AudioManager.Instance.musicSource.mute = !AudioManager.Instance.musicSource.mute;
+
+
+    public void Toggle_SFX() => AudioManager.Instance.sfxSource.mute = !AudioManager.Instance.sfxSource.mute;
 }

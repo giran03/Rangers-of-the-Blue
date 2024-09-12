@@ -86,6 +86,9 @@ public class PickUp_Handler : MonoBehaviour
 
         display_EndScreen.SetActive(false);
 
+        timeRemaining = TrashpickingGameplayManager.Instance.GetLevelTimer();
+        Debug.Log($"TIMER IS: {timeRemaining}");
+
         // 🔊 change music
         AudioManager.Instance.StopMusic();
         AudioManager.Instance.PlayMusic("Game BGM");

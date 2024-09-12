@@ -13,11 +13,11 @@ public class AudioManager : MonoBehaviour
 {
     [Header("Configs")]
     [SerializeField] Audio[] musicSounds, sfxSounds;
-    [SerializeField] AudioSource musicSource, sfxSource;
+    public AudioSource musicSource, sfxSource;
 
     public static AudioManager Instance;
     AudioSource currentSfxLooping;
-    AudioSource currentMusic;
+    public AudioSource currentMusic;
     bool playedMusic;
 
     private void Awake()
@@ -33,14 +33,14 @@ public class AudioManager : MonoBehaviour
 
     private void Update()
     {
-        if(GameSceneManager.Instance.CurrentScene() == "_Menu")
-        {
-            currentMusic.volume = .3f;
-        }
-        else
-        {
-            currentMusic.volume = .3f;
-        }
+        // if(GameSceneManager.Instance.CurrentScene() == "_Menu")
+        // {
+        //     currentMusic.volume = .3f;
+        // }
+        // else
+        // {
+        //     currentMusic.volume = .3f;
+        // }
     }
 
     private void Start() => PlayMusic("Menu BGM");

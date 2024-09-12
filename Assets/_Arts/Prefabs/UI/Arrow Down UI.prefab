@@ -144,4 +144,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UI_Arrow: {fileID: 6126343584224216337}
   scrollableContent: {fileID: 0}
-  maxScroll: {x: 0, y: 0, z: 0}
+  maxScroll: {x: 0, y: -1440, z: 0}

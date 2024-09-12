@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -26,10 +27,14 @@ public class DialogueHandler : MonoBehaviour
     [SerializeField] Dialogue[] dialogues;
 
     bool isPaused;
-    int currentDialogueIndex = 0;
+    int currentDialogueIndex;
+
+    Dialogue dialogue;
 
     void Start()
     {
+        currentDialogueIndex = 0;
+        dialogueText.text = string.Empty;
         SetButton();
     }
 
@@ -61,7 +66,7 @@ public class DialogueHandler : MonoBehaviour
             isPaused = true;
         }
 
-        Dialogue dialogue = dialogues[currentDialogueIndex];
+        dialogue = dialogues[currentDialogueIndex];
         dialogueText.text = dialogue.text;
 
         // play voice over sfx

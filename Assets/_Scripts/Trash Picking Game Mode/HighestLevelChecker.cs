@@ -19,22 +19,19 @@ public class HighestLevelChecker : MonoBehaviour
         TP_LevelSelectHandler.isDataLoaded = false;
         if (SaveSystem.SelectedProfileName == null)
         {
-            Debug.Log("Selected profile is NULL!");
             return;
         }
 
         switch (_buttonName = button.name)
         {
-            case "TP Button":
+            case "TP Play Folder":
                 NextButton("TP");
                 break;
 
-            case "SI Button":
+            case "SI Play Folder":
                 NextButton("SI");
                 break;
         }
-
-        Debug.Log($"Button of {_buttonName} is pressed!");
     }
 
     // BUTTON | setting the selected level before playing;
@@ -68,26 +65,23 @@ public class HighestLevelChecker : MonoBehaviour
     {
         if (SaveSystem.SelectedProfileName != null)
             SaveSystem.SelectedProfileName = null;
-        
+
         if (LeaderboardHandler.Instance != null)
             LeaderboardHandler.Instance.RefreshLeaderboards();
     }
 
     void NextButton(string selectedGamemode)
     {
-        string profile = SaveSystem.SelectedProfileName;
-        PlayerData data = SaveSystem.LoadPlayer(profile);
-
+        PlayerData data;
+        data = SaveSystem.LoadPlayer(SaveSystem.SelectedProfileName);
         switch (selectedGamemode)
         {
             case "TP":
                 CheckLevelProgress(data, selectedGamemode);
-                Debug.Log($"Highest level of {data.playerName} in TP GAMEMODE is: {data.profile_TP_Level}");
                 break;
 
             case "SI":
                 CheckLevelProgress(data, selectedGamemode);
-                Debug.Log($"Highest level of {data.playerName} in SI GAMEMODE is: {data.profile_SI_Level}");
                 break;
         }
     }
@@ -131,7 +125,6 @@ public class HighestLevelChecker : MonoBehaviour
 
     void DeActivateButton(List<GameObject> gameObjectList)
     {
-        Debug.Log("Deactivating buttons~~~~~");
         for (int i = 0; i < gameObjectList.Count; i++)
             gameObjectList[i].SetActive(false);
     }

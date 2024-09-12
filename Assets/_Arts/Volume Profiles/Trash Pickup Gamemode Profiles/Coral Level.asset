@@ -21,7 +21,7 @@ MonoBehaviour:
     m_Value: -7.7
   colorFilter:
     m_OverrideState: 1
-    m_Value: {r: 0.5235849, g: 0.9106544, b: 1, a: 1}
+    m_Value: {r: 1.1424627, g: 1.2878598, b: 1.4142135, a: 1}
   hueShift:
     m_OverrideState: 0
     m_Value: 0
@@ -90,3 +90,20 @@ MonoBehaviour:
   components:
   - {fileID: -6134767769385965158}
   - {fileID: -8859547525951570667}
+  - {fileID: 5671826400192643756}
+--- !u!114 &5671826400192643756
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81180773991d8724ab7f2d216912b564, type: 3}
+  m_Name: ChromaticAberration
+  m_EditorClassIdentifier: 
+  active: 1
+  intensity:
+    m_OverrideState: 1
+    m_Value: 0.2

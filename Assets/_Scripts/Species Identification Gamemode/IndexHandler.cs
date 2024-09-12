@@ -62,7 +62,7 @@ public class IndexHandler : MonoBehaviour
 
         // ADD BUTTON LISTENER
         Button entryButton = entryTransform.GetComponent<Button>();
-        entryButton.onClick.RemoveListener(() => Add_Button_SFX(data.speciesName));
+        entryButton.onClick.RemoveAllListeners();
         entryButton.onClick.AddListener(() => Add_Button_SFX(data.speciesName));
 
         entryTransform.Find("SpeciesImage").GetComponent<Image>().sprite = GetSpeciesImage(data.speciesName);
@@ -85,6 +85,6 @@ public class IndexHandler : MonoBehaviour
     {
         var speciesIndex = SI_Manager.Instance.speciesIndex_Array.FirstOrDefault(si => si.speciesIndexName == speciesNameToFind);
 
-        return speciesIndex?.speciesImg; // null propagation
+        return speciesIndex?.speciesImg;
     }
 }

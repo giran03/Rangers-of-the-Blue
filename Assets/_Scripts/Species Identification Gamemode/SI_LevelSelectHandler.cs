@@ -40,12 +40,12 @@ public class SI_LevelSelectHandler : MonoBehaviour
 
     public void Button_LoadDataInfo()
     {
-        // if (isDataLoaded) return;
+        if (isDataLoaded) return;
 
         // CHANGED FROM Profile's load player func ⚠️⚠️⚠️⚠️⚠️⚠️
         playerData = SaveSystem.LoadPlayer(SaveSystem.SelectedProfileName);
         isDataLoaded = true;
-
-        Debug.Log($"Loading player data!");
     }
+
+    public void Button_CanLoadData() => isDataLoaded = false;
 }

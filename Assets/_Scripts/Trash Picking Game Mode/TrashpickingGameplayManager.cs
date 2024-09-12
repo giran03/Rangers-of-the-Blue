@@ -10,6 +10,8 @@ public class TrashpickingGameplayManager : MonoBehaviour
     /// 1 - Shallow,
     /// 2 - Coral
     [SerializeField] GameObject[] levelCollection;
+    [SerializeField] int[] levelTimers;
+    int selectedLevel;
 
     void Awake()
     {
@@ -21,8 +23,15 @@ public class TrashpickingGameplayManager : MonoBehaviour
 
     private void Start()
     {
-        levelCollection[PlayerPrefs.GetInt("TP_SelectedLevel")].SetActive(true);
-        Debug.Log($"Player prefs level {PlayerPrefs.GetInt("TP_SelectedLevel")}");
+        selectedLevel = PlayerPrefs.GetInt("TP_SelectedLevel");
+
+        levelCollection[selectedLevel].SetActive(true);
+        Debug.Log($"Player prefs TP Level Selected: {selectedLevel}");
+    }
+
+    public int GetLevelTimer()
+    {
+        return levelTimers[selectedLevel];
     }
 
     public void NextLevel(int level)

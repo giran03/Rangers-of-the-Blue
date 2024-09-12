@@ -27,17 +27,21 @@ public class ProfilesHandler : MonoBehaviour
     [SerializeField] GameObject lockedButton;
     [SerializeField] GameObject dialogue_SI_Unlocked;
 
+    PlayerData playerData;
+
     private void Awake()
     {
-        // reset the selected profile player prefs | TODO: remove this; call it when returning to mainmenu or back button
-        SaveSystem.SelectedProfileName = null;
+        if (Instance != null && Instance != this)
+            Destroy(this);
+        else
+        {
+            Instance = this;
+        }
     }
 
     private void Start()
     {
         UpdateOptions();
-        Debug.Log($"Selected profile from memory is: {SaveSystem.SelectedProfileName}");
-        
         dialogue_SI_Unlocked.SetActive(false);
     }
 
@@ -48,14 +52,19 @@ public class ProfilesHandler : MonoBehaviour
 
         try
         {
-            _name = inputField_name.text;
-            _age = System.Convert.ToInt32(inputField_age.text);
+
+            if (inputField_name.text != "" || inputField_name.text != null)
+                _name = inputField_name.text;
+
+            int age_input = System.Convert.ToInt32(inputField_age.text);
+
+            if (age_input <= 0 || age_input >= 99)
+                _age = age_input;
         }
         catch (System.Exception)
         {
             Debug.Log("Please fill up the forms correctly~");
             inputField_age.text = "";
-            return;
         }
     }
 
@@ -75,7 +84,7 @@ public class ProfilesHandler : MonoBehaviour
         dropdown_Profiles.RefreshShownValue();
     }
 
-    public void Button_CreateNewProfile()
+    public void Button_Creating_NewProfile()
     {
         isCreatingProfile = true;
         selectedProfile = null;
@@ -95,33 +104,23 @@ public class ProfilesHandler : MonoBehaviour
     // new profile create button
     public void Button_CreateProfile()
     {
-        if (_name == null) return;
+        if (inputField_name.text == "" || inputField_name.text == null
+            || inputField_age.text == "" || inputField_age.text == null) return;
 
-        if (_name == "deleteAll")
-        {
-            SaveSystem.DeleteAllFiles(_name);
-            LeaderboardHandler.Instance.RefreshLeaderboards();
-            inputField_name.text = "";
-            inputField_age.text = "";
-            Debug.Log($"Deleted all files!");
-            return;
-        }
-        else
-        {
-            Profile.Instance.playerName = _name;
-            Profile.Instance.playerAge = _age;
-            Profile.Instance.SavePlayer();
-            selectedProfile = _name;
+        Profile.Instance.playerName = _name;
+        Profile.Instance.playerAge = _age;
+        Profile.Instance.SavePlayer();
+        selectedProfile = _name;
 
-            inputField_name.text = "";
-            inputField_age.text = "";
+        inputField_name.text = "";
+        inputField_age.text = "";
 
-            Button_SelectThisProfile();
-            UpdateOptions();
-            Debug.Log($"NEW PROFILE CREATED! name: {Profile.Instance.playerName} , age: {Profile.Instance.playerAge}");
+        Button_SelectThisProfile(selectedProfile);
+        UpdateOptions();
 
-            DisplayTransition(createButtonTransitionDisplay);
-        }
+        Debug.Log($"NEW PROFILE CREATED! name: {Profile.Instance.playerName} , age: {Profile.Instance.playerAge}");
+
+        DisplayTransition(createButtonTransitionDisplay);
     }
 
     public void Button_NextButton()
@@ -131,21 +130,38 @@ public class ProfilesHandler : MonoBehaviour
             Debug.Log($"No selected profile!!!");
             return;
         }
+        else
+            Button_SelectThisProfile(selectedProfile);
+
         DisplayTransition(nextButtonTransitionDisplay);
     }
 
-    public void Button_SelectThisProfile()
+    public void Button_SelectThisProfile(string profile)
     {
-        SaveSystem.SelectedProfileName = selectedProfile;
-        PlayerData playerData = SaveSystem.LoadPlayer(SaveSystem.SelectedProfileName);
+        SaveSystem.SelectedProfileName = profile;
+        playerData = SaveSystem.LoadPlayer(SaveSystem.SelectedProfileName);
         label_profileName.SetText($"GOODLUCK {playerData.playerName}!");
-        if (playerData.stage_3_cleared)
+
+        RefreshButtons();
+    }
+
+    public void ClearProfileSelection()
+    {
+        SaveSystem.SelectedProfileName = null;
+    }
+
+    public void RefreshButtons()
+    {
+        if (playerData.stage_3_cleared || playerData.stage_SI_1_cleared)
         {
             lockedButton.SetActive(false);
             dialogue_SI_Unlocked.SetActive(true);
         }
-
-        ReloadObjects.ProfileToCheck = playerData;
+        else if (!playerData.stage_SI_1_cleared)
+        {
+            lockedButton.SetActive(true);
+            dialogue_SI_Unlocked.SetActive(false);
+        }
     }
 
     public static List<string> GetPlayerFileNamesWithoutExtension()

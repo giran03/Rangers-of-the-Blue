@@ -155,12 +155,14 @@ public class SI_Manager : MonoBehaviour
             if (hit.collider.CompareTag("Species"))
             {
                 Debug.Log($"Currently scanning species~");
+                button_scanButton.SetActive(true);
             }
         }
         else
         {
             DisplayInfoBox();
-            button_scanButton.SetActive(true);
+            // button_scanButton.SetActive(true);
+            button_scanButton.SetActive(false);
             button_index.SetActive(true);
             currentSpecies_Obect = null;
             DestroyQuiz();
@@ -243,9 +245,9 @@ public class SI_Manager : MonoBehaviour
         }
     }
 
-/// <summary>
-/// Display Information about the species
-/// </summary>
+    /// <summary>
+    /// Display Information about the species
+    /// </summary>
     void DisplayInfoBox(bool condition = false)
     {
         dispaly_scanInfoBox.SetActive(condition);
@@ -516,9 +518,10 @@ public class SI_Manager : MonoBehaviour
 
             // random position
             x = UnityEngine.Random.Range(min_SpawnOffset.x, max_SpawnOffset.x);
-            y = UnityEngine.Random.Range(-.3f, .3f);
+            y = UnityEngine.Random.Range(min_SpawnOffset.y, max_SpawnOffset.y);
             z = UnityEngine.Random.Range(min_SpawnOffset.z, max_SpawnOffset.z);
             pos = new Vector3(x, y, z);
+            
             spawned_species.transform.position = pos;
 
             Debug.Log("Spawned another species~!");
