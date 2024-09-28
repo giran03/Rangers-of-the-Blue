@@ -14,6 +14,13 @@ public class HighestLevelChecker : MonoBehaviour
 
     string _buttonName;
 
+    private void Start()
+    {
+        PlayerPrefs.SetInt("TP_SelectedLevel", 0);
+        PlayerPrefs.SetInt("SI_SelectedLevel", 0);
+    }
+
+
     public void ButtonPress(Button button)
     {
         TP_LevelSelectHandler.isDataLoaded = false;
