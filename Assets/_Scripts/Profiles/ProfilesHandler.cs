@@ -56,15 +56,17 @@ public class ProfilesHandler : MonoBehaviour
             if (inputField_name.text != "" || inputField_name.text != null)
                 _name = inputField_name.text;
 
-            int age_input = System.Convert.ToInt32(inputField_age.text);
+            // int age_input = System.Convert.ToInt32(inputField_age.text);
 
-            if (age_input <= 0 || age_input >= 99)
-                _age = age_input;
+            // if (age_input <= 0 || age_input >= 99)
+            //     _age = age_input;
+
+            _age = 20;
         }
         catch (System.Exception)
         {
             Debug.Log("Please fill up the forms correctly~");
-            inputField_age.text = "";
+            // inputField_age.text = "";
         }
     }
 
@@ -104,8 +106,12 @@ public class ProfilesHandler : MonoBehaviour
     // new profile create button
     public void Button_CreateProfile()
     {
+        if (inputField_name.text == "" || inputField_name.text == null) return;
+
+        /*
         if (inputField_name.text == "" || inputField_name.text == null
-            || inputField_age.text == "" || inputField_age.text == null) return;
+        || inputField_age.text == "" || inputField_age.text == null) return;
+        */
 
         Profile.Instance.playerName = _name;
         Profile.Instance.playerAge = _age;
@@ -113,7 +119,7 @@ public class ProfilesHandler : MonoBehaviour
         selectedProfile = _name;
 
         inputField_name.text = "";
-        inputField_age.text = "";
+        // inputField_age.text = "";
 
         Button_SelectThisProfile(selectedProfile);
         UpdateOptions();

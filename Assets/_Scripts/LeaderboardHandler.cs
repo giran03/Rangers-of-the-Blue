@@ -31,17 +31,31 @@ public class LeaderboardHandler : MonoBehaviour
 
         if (playerDataList != null)
             if (playerDataList.Count > 0)
-                for (int i = 0; i < playerDataList.Count; i++) // sort by TP SCORES
+                // sort by profile names
+                for (int i = 0; i < playerDataList.Count; i++)
                 {
                     for (int j = i + 1; j < playerDataList.Count; j++)
                     {
-                        if (playerDataList[j].profile_TP_TotalScore > playerDataList[i].profile_TP_TotalScore)
+                        if (string.Compare(playerDataList[j].playerName, playerDataList[i].playerName) < 0)
                         {
                             (playerDataList[j], playerDataList[i]) = (playerDataList[i], playerDataList[j]);    // swap
                         }
                     }
                 }
 
+        /*
+        // sort by TP SCORES
+        for (int i = 0; i < playerDataList.Count; i++)
+        {
+            for (int j = i + 1; j < playerDataList.Count; j++)
+            {
+                if (playerDataList[j].profile_TP_TotalScore > playerDataList[i].profile_TP_TotalScore)
+                {
+                    (playerDataList[j], playerDataList[i]) = (playerDataList[i], playerDataList[j]);    // swap
+                }
+            }
+        }
+        */
         highscoreEntryTransformList = new();
         foreach (PlayerData data in playerDataList)
             CreateHighscoreEntryTransform(data, entryContainer, highscoreEntryTransformList);

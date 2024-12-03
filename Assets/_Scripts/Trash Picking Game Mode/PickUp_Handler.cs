@@ -17,6 +17,7 @@ public class PickUp_Handler : MonoBehaviour
     [SerializeField] TMP_Text hud_label_trashPickUp;
     [SerializeField] TMP_Text hud_label_netBag;
     [SerializeField] GameObject hud_label_netBagFull;
+    [SerializeField] GameObject hurtOverlay;
 
     [Header("Timer Config")]
     [SerializeField] GameObject hud_label_timerHasRunOut;
@@ -254,7 +255,19 @@ public class PickUp_Handler : MonoBehaviour
 
                 // 🔊 SFX
                 if (lastCollected_Trash.Contains("Avoid"))
+                {
+                    // play hurt animation
+                    StartCoroutine(ShowHurtOverLay());
+
+                    IEnumerator ShowHurtOverLay()
+                    {
+                        hurtOverlay.SetActive(true);
+                        yield return new WaitForSeconds(.3f);
+                        hurtOverlay.SetActive(false);
+                    }
+
                     AudioManager.Instance.PlaySFX("Wrong");
+                }
                 else
                     AudioManager.Instance.PlaySFX("Correct");
             }
@@ -359,7 +372,7 @@ public class PickUp_Handler : MonoBehaviour
 
             // random position
             x = Random.Range(min_SpawnOffset.x, max_SpawnOffset.x);
-            y = Random.Range(-.3f, .3f);
+            y = Random.Range(min_SpawnOffset.y, max_SpawnOffset.y);
             z = Random.Range(min_SpawnOffset.z, max_SpawnOffset.z);
             pos = new Vector3(x, y, z);
             spawned_trash.transform.position = pos;
